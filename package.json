@@ -2,10 +2,15 @@
   "name": "react-native-maps-clusterize",
   "version": "1.0.0",
   "description": "\"React Native map clustering\"",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "files": [
+    "lib"
+  ],
+  "types": "lib/index.d.ts",
   "scripts": {
     "prettier": "prettier --config ./.prettierrc --write \"./src/**/*\"",
-    "build": "rollup --config"
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
@@ -18,22 +23,21 @@
   },
   "homepage": "https://github.com/codempireio/react-native-maps-clusterize#readme",
   "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
+    "@types/react": "^16.8.10",
+    "@types/react-native": "^0.57.42",
+    "@types/supercluster": "^5.0.1",
     "babel-loader": "^8.0.5",
-    "metro-react-native-babel-preset": "^0.53.1",
     "prettier": "^1.16.4",
-    "prop-types": "^15.7.2",
-    "rollup": "^1.7.4"
+    "rollup": "^1.8.0",
+    "rollup-plugin-typescript2": "^0.20.1",
+    "typescript": "^3.4.1"
   },
   "dependencies": {
     "@mapbox/geo-viewport": "0.4.0",
-    "supercluster": "^6.0.1",
+    "geojson": "^0.5.0",
     "react": "^16.8.5",
     "react-native": "^0.59.2",
-    "react-native-maps": "^0.23.0"
-  },
-  "peerDependencies": {
-    "react-native-maps": "^0.23.0"
+    "react-native-maps": "^0.23.0",
+    "supercluster": "^6.0.1"
   }
 }
