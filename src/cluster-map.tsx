@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import GoogleMapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import { StyleSheet, StyleProp, ViewProps } from 'react-native';
+import GoogleMapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  Region,
+  MapViewProps,
+} from 'react-native-maps';
 import Supercluster from 'supercluster';
-import PropTypes from 'prop-types';
+import { Feature, Point } from 'geojson';
 
 import { ClusterMarker } from './cluster-marker';
 
@@ -10,40 +15,58 @@ import * as mapUtils from './utils/map-utils';
 import * as utils from './utils/utils';
 import { DEFAULT_SUPERCLUSTER_OPTIONS } from './utils/constants';
 
-export class ClusterMap extends React.PureComponent {
-  // TODO: Try to extract supercluster to service
-  superCluster = null;
-  rawData = null;
+export interface IClusterMapProps extends MapViewProps {
+  superclusterOptions: object;
+  region: Region;
+  children: Marker[];
+  renderClusterMarker: Function;
+  style: StyleProp<ViewProps>;
+  onMapReady: () => void;
+  onClusterClick: () => void;
+  onRegionChangeComplete: (region: Region) => void;
+}
 
-  state = {
+interface IClusterMapState {
+  markers:
+    | Supercluster.ClusterFeature<any>[]
+    | Supercluster.PointFeature<any>[];
+  isMapLoaded: boolean;
+}
+
+export class ClusterMap extends React.PureComponent<
+  IClusterMapProps,
+  IClusterMapState
+> {
+  state: IClusterMapState = {
     markers: [],
     isMapLoaded: false,
   };
 
+  // TODO: Try to extract supercluster to service
+  superCluster: Supercluster = null;
+  rawData: Feature<Point>[] = null;
+
   componentDidMount() {
-    const { children } = this.props;
-
-    const markers = utils.createMarkers(children) || [];
-
-    this.clusterize(markers);
+    this.clusterize();
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: IClusterMapProps) {
     // TODO: create array compare utils
-    if (this.rawData.length !== nextProps.markers.length) {
-      this.clusterize(nextProps.markers);
+    if (this.rawData.length !== nextProps.children.length) {
+      this.clusterize();
     }
   }
 
-  onRegionChangeComplete = (region) => {
+  onRegionChangeComplete = (region: Region) => {
     this.generateMarkers(region);
     this.props.onRegionChangeComplete &&
       this.props.onRegionChangeComplete(region);
   };
 
-  clusterize = (markers) => {
-    const { superclusterOptions, region } = this.props;
+  clusterize = () => {
+    const { superclusterOptions, region, children } = this.props;
 
+    const markers = utils.createMarkers(children) || [];
     const options = superclusterOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
     this.superCluster = new Supercluster(options);
     this.rawData = markers.map(mapUtils.itemToGeoJSONFeature);
@@ -52,7 +75,7 @@ export class ClusterMap extends React.PureComponent {
     this.generateMarkers(region);
   };
 
-  generateMarkers = (region) => {
+  generateMarkers = (region: Region) => {
     const bBox = mapUtils.regionTobBox(region);
     const zoom = mapUtils.getBoundsZoomLevel(bBox);
 
@@ -67,7 +90,7 @@ export class ClusterMap extends React.PureComponent {
     const { markers } = this.state;
     const { onClusterClick, renderClusterMarker } = this.props;
 
-    return markers.map((marker, key) => {
+    return markers.map((marker) => {
       const { properties, geometry } = marker;
       const { cluster, item, point_count } = properties;
 
@@ -114,16 +137,6 @@ export class ClusterMap extends React.PureComponent {
     );
   };
 }
-
-ClusterMaps.propTypes = {
-  superclusterOptions: PropTypes.object,
-  region: PropTypes.object,
-  children: PropTypes.element,
-  onMapReady: PropTypes.func,
-  renderClusterMarker: PropTypes.func,
-  onClusterClick: PropTypes.func,
-  onRegionChangeComplete: PropTypes.func,
-};
 
 const styles = StyleSheet.create({
   map: {

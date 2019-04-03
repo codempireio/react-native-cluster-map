@@ -1,9 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Marker } from 'react-native-maps';
-import PropTypes from 'prop-types';
 
-export const ClusterMarker = (props) => {
+interface IClusterMarkerProps {
+  coordinates: number[];
+  pointCount: number;
+  children: React.ReactNode;
+  onClusterClick: () => void;
+}
+
+export const ClusterMarker = (props: IClusterMarkerProps) => {
   const { coordinates, pointCount, children, onClusterClick } = props;
 
   if (pointCount < 0) {
@@ -21,13 +27,6 @@ export const ClusterMarker = (props) => {
       )}
     </Marker>
   );
-};
-
-ClusterMarker.propTypes = {
-  coordinates: PropTypes.array,
-  pointCount: PropTypes.number,
-  children: PropTypes.element,
-  onClusterClick: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
