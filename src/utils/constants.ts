@@ -5,9 +5,6 @@ export const DEFAULT_SUPERCLUSTER_OPTIONS = {
   nodeSize: 16,
 };
 
-export const ERROR_MESSAGE =
-  'Please, use one method for pass markers. Either as children or as props.';
-
 export const PACKAGE_PROPS = [
   'clusterOptions',
   'renderClusterMarker',

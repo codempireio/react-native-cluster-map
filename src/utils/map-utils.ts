@@ -1,4 +1,6 @@
 import { Dimensions } from 'react-native';
+import { Region, Marker } from 'react-native-maps';
+import { BBox, Feature, Point } from 'geojson';
 
 const getDimensions = () => {
   return {
@@ -7,19 +9,19 @@ const getDimensions = () => {
   };
 };
 
-export const itemToGeoJSONFeature = (item) => ({
+export const itemToGeoJSONFeature = (item: Marker): Feature<Point> => ({
   type: 'Feature',
   geometry: {
     type: 'Point',
     coordinates: [
-      item.props.coordinate.longitude,
-      item.props.coordinate.latitude,
+      item.props.coordinate.longitude as number,
+      item.props.coordinate.latitude as number,
     ],
   },
-  properties: { point_count: 0, item }, // eslint-disable-line camelcase
+  properties: { point_count: 0, item },
 });
 
-export const regionTobBox = (region) => {
+export const regionTobBox = (region: Region): BBox => {
   const lngD =
     region.longitudeDelta < 0
       ? region.longitudeDelta + 360
@@ -33,17 +35,17 @@ export const regionTobBox = (region) => {
   ];
 };
 
-export const getBoundsZoomLevel = (bounds) => {
+export const getBoundsZoomLevel = (bounds: BBox) => {
   const ZOOM_MAX = 20;
   const WORLD_DIM = getDimensions();
 
-  function latRad(lat) {
+  function latRad(lat: number) {
     const sin = Math.sin((lat * Math.PI) / 180);
     const radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
     return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
   }
 
-  function zoom(mapPx, worldPx, fraction) {
+  function zoom(mapPx: number, worldPx: number, fraction: number) {
     return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
   }
 
