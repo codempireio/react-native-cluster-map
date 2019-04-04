@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import { StyleSheet, StyleProp, ViewProps } from 'react-native';
 import GoogleMapView, {
   PROVIDER_GOOGLE,
@@ -11,12 +11,11 @@ import { Feature, Point } from 'geojson';
 
 import { ClusterMarker } from './cluster-marker';
 
-import * as mapUtils from './utils/map-utils';
-import * as utils from './utils/utils';
-import { DEFAULT_SUPERCLUSTER_OPTIONS } from './utils/constants';
+import { clusterService } from './cluster-service';
+import * as utils from './utils';
 
 export interface IClusterMapProps extends MapViewProps {
-  superclusterOptions: object;
+  superclusterOptions?: object;
   region: Region;
   children: Marker[];
   renderClusterMarker: (pointCount: number) => ReactNode;
@@ -68,10 +67,18 @@ export class ClusterMap extends React.PureComponent<
   }
 
   public componentWillReceiveProps(nextProps: IClusterMapProps) {
-    // TODO: create array compare utils
-    if (this.rawData.length !== nextProps.children.length) {
+    const { children } = nextProps;
+    if (
+      clusterService.isMarkersChanged(utils.createMarkers(children) || [])
+    ) {
       this.clusterize();
     }
+  }
+
+  private generateMarkers(region: Region) {
+    this.setState({
+      markers: clusterService.getClusters(region),
+    });
   }
 
   private onRegionChangeComplete = (region: Region) => {
@@ -83,24 +90,10 @@ export class ClusterMap extends React.PureComponent<
   private clusterize = () => {
     const { superclusterOptions, region, children } = this.props;
 
-    const markers = utils.createMarkers(children) || [];
-    const options = superclusterOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
-    this.superCluster = new Supercluster(options);
-    this.rawData = markers.map(mapUtils.itemToGeoJSONFeature);
-    this.superCluster.load(this.rawData);
+    const payloadMarkers = utils.createMarkers(children) || [];
 
+    clusterService.createClusters(superclusterOptions, payloadMarkers);
     this.generateMarkers(region);
-  };
-
-  private generateMarkers = (region: Region) => {
-    const bBox = mapUtils.regionTobBox(region);
-    const zoom = mapUtils.getBoundsZoomLevel(bBox);
-
-    const markers = this.superCluster.getClusters(bBox, zoom);
-
-    this.setState({
-      markers,
-    });
   };
 
   private renderMarkers = () => {
