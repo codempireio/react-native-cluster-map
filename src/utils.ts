@@ -1,16 +1,25 @@
-import { ReactNode } from 'react';
+import { Marker } from 'react-native-maps';
 
-import { PACKAGE_PROPS } from './constants';
+import { IClusterMapProps } from './cluster-map';
 
-import { IClusterMapProps } from '../cluster-map';
-
-export const createMarkers = (children: ReactNode[]) => {
+export const createMarkers = (children: Marker[]) => {
   if (!Array.isArray(children)) {
     return [children];
   }
 
   return children;
 };
+
+const PACKAGE_PROPS = [
+  'clusterOptions',
+  'renderClusterMarker',
+  'customMarker',
+  'style',
+  'onMapReady',
+  'onRegionChangeComplete',
+  'region',
+  'onClusterClick',
+];
 
 export const serializeProps = (userProps: IClusterMapProps) => {
   return Object.keys(userProps).reduce(
