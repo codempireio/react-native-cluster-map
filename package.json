@@ -9,8 +9,16 @@
   ],
   "types": "lib/index.d.ts",
   "scripts": {
-    "prettier": "prettier --config ./.prettierrc --write \"./src/**/*\"",
+    "prettier": "prettier --config ./.prettierrc --write  \"./src/**/*.{ts,tsx}\"",
+    "lint": "tslint 'src/**/*.{ts,tsx}'",
     "build": "rollup -c"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "yarn prettier",
+      "yarn lint",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -30,6 +38,9 @@
     "prettier": "^1.16.4",
     "rollup": "^1.8.0",
     "rollup-plugin-typescript2": "^0.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-react": "^4.0.0",
     "typescript": "^3.4.1"
   },
   "dependencies": {
@@ -38,6 +49,7 @@
     "react": "^16.8.5",
     "react-native": "^0.59.2",
     "react-native-maps": "^0.23.0",
-    "supercluster": "^6.0.1"
+    "supercluster": "^6.0.1",
+    "tslint": "^5.15.0"
   }
 }

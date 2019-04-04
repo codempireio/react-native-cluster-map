@@ -25,11 +25,11 @@ export const serializeProps = (userProps: IClusterMapProps) => {
 };
 
 export const makeId = () => {
-  let text = '';
-  const char_list =
+  let id = '';
+  const possibleChar =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   for (let i = 0; i < 10; i++) {
-    text += char_list.charAt(Math.floor(Math.random() * char_list.length));
+    id += possibleChar.charAt(Math.floor(Math.random() * possibleChar.length));
   }
-  return text;
+  return id;
 };

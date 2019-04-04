@@ -1,5 +1,8 @@
 import typescript from 'rollup-plugin-typescript2';
+
 import pkg from './package.json';
+
+const tsconfigOverride = { compilerOptions: { module: 'es2015' } };
 
 export default {
   input: 'src/index.ts',
@@ -20,6 +23,7 @@ export default {
   plugins: [
     typescript({
       typescript: require('typescript'),
+      tsconfigOverride,
     }),
   ],
 };
