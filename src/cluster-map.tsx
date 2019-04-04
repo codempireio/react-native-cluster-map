@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 import { StyleSheet, StyleProp, ViewProps } from 'react-native';
 import GoogleMapView, {
   PROVIDER_GOOGLE,
@@ -19,7 +19,7 @@ export interface IClusterMapProps extends MapViewProps {
   superclusterOptions: object;
   region: Region;
   children: Marker[];
-  renderClusterMarker: Function;
+  renderClusterMarker: (pointCount: number) => ReactNode;
   style: StyleProp<ViewProps>;
   onMapReady: () => void;
   onClusterClick: () => void;
@@ -28,8 +28,8 @@ export interface IClusterMapProps extends MapViewProps {
 
 interface IClusterMapState {
   markers:
-    | Supercluster.ClusterFeature<any>[]
-    | Supercluster.PointFeature<any>[];
+    | Array<Supercluster.ClusterFeature<any>>
+    | Array<Supercluster.PointFeature<any>>;
   isMapLoaded: boolean;
 }
 
@@ -37,33 +37,50 @@ export class ClusterMap extends React.PureComponent<
   IClusterMapProps,
   IClusterMapState
 > {
-  state: IClusterMapState = {
+  public state: IClusterMapState = {
     markers: [],
     isMapLoaded: false,
   };
 
   // TODO: Try to extract supercluster to service
-  superCluster: Supercluster = null;
-  rawData: Feature<Point>[] = null;
+  private superCluster: Supercluster = null;
+  private rawData: Array<Feature<Point>> = null;
 
-  componentDidMount() {
+  public render() {
+    const { style, region } = this.props;
+
+    return (
+      <GoogleMapView
+        {...utils.serializeProps(this.props)}
+        style={style || styles.map}
+        onMapReady={this.onMapReady}
+        initialRegion={region}
+        onRegionChangeComplete={this.onRegionChangeComplete}
+        provider={PROVIDER_GOOGLE}
+      >
+        {this.state.isMapLoaded && this.renderMarkers()}
+      </GoogleMapView>
+    );
+  }
+
+  public componentDidMount() {
     this.clusterize();
   }
 
-  componentWillReceiveProps(nextProps: IClusterMapProps) {
+  public componentWillReceiveProps(nextProps: IClusterMapProps) {
     // TODO: create array compare utils
     if (this.rawData.length !== nextProps.children.length) {
       this.clusterize();
     }
   }
 
-  onRegionChangeComplete = (region: Region) => {
+  private onRegionChangeComplete = (region: Region) => {
     this.generateMarkers(region);
     this.props.onRegionChangeComplete &&
       this.props.onRegionChangeComplete(region);
   };
 
-  clusterize = () => {
+  private clusterize = () => {
     const { superclusterOptions, region, children } = this.props;
 
     const markers = utils.createMarkers(children) || [];
@@ -75,7 +92,7 @@ export class ClusterMap extends React.PureComponent<
     this.generateMarkers(region);
   };
 
-  generateMarkers = (region: Region) => {
+  private generateMarkers = (region: Region) => {
     const bBox = mapUtils.regionTobBox(region);
     const zoom = mapUtils.getBoundsZoomLevel(bBox);
 
@@ -86,7 +103,7 @@ export class ClusterMap extends React.PureComponent<
     });
   };
 
-  renderMarkers = () => {
+  private renderMarkers = () => {
     const { markers } = this.state;
     const { onClusterClick, renderClusterMarker } = this.props;
 
@@ -111,24 +128,7 @@ export class ClusterMap extends React.PureComponent<
     });
   };
 
-  render() {
-    const { style, region } = this.props;
-
-    return (
-      <GoogleMapView
-        {...utils.serializeProps(this.props)}
-        style={style || styles.map}
-        onMapReady={this.onMapReady}
-        initialRegion={region}
-        onRegionChangeComplete={this.onRegionChangeComplete}
-        provider={PROVIDER_GOOGLE}
-      >
-        {this.state.isMapLoaded && this.renderMarkers()}
-      </GoogleMapView>
-    );
-  }
-
-  onMapReady = () => {
+  private onMapReady = () => {
     this.setState(
       {
         isMapLoaded: true,
