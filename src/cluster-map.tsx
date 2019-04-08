@@ -1,4 +1,4 @@
-import React, { ReactNode, ReactElement } from 'react';
+import React, { ReactNode } from 'react';
 import { StyleSheet, StyleProp, ViewProps } from 'react-native';
 import GoogleMapView, {
   PROVIDER_GOOGLE,
@@ -7,7 +7,6 @@ import GoogleMapView, {
   MapViewProps,
 } from 'react-native-maps';
 import Supercluster from 'supercluster';
-import { Feature, Point } from 'geojson';
 
 import { ClusterMarker } from './cluster-marker';
 
@@ -41,10 +40,6 @@ export class ClusterMap extends React.PureComponent<
     isMapLoaded: false,
   };
 
-  // TODO: Try to extract supercluster to service
-  private superCluster: Supercluster = null;
-  private rawData: Array<Feature<Point>> = null;
-
   public render() {
     const { style, region } = this.props;
 
@@ -68,9 +63,7 @@ export class ClusterMap extends React.PureComponent<
 
   public componentWillReceiveProps(nextProps: IClusterMapProps) {
     const { children } = nextProps;
-    if (
-      clusterService.isMarkersChanged(utils.createMarkers(children) || [])
-    ) {
+    if (clusterService.isMarkersChanged(children)) {
       this.clusterize();
     }
   }
@@ -90,9 +83,7 @@ export class ClusterMap extends React.PureComponent<
   private clusterize = () => {
     const { superclusterOptions, region, children } = this.props;
 
-    const payloadMarkers = utils.createMarkers(children) || [];
-
-    clusterService.createClusters(superclusterOptions, payloadMarkers);
+    clusterService.createClusters(superclusterOptions, children);
     this.generateMarkers(region);
   };
 
@@ -104,8 +95,10 @@ export class ClusterMap extends React.PureComponent<
       const { properties, geometry } = marker;
       const { cluster, item, point_count } = properties;
 
+      const key = utils.makeId();
+
       if (!cluster && item) {
-        return <Marker {...item.props} key={utils.makeId()} />;
+        return <Marker {...item.props} key={key} />;
       }
 
       return (
@@ -113,7 +106,7 @@ export class ClusterMap extends React.PureComponent<
           pointCount={point_count}
           coordinates={geometry.coordinates}
           onClusterClick={onClusterClick}
-          key={utils.makeId()}
+          key={key}
         >
           {renderClusterMarker && renderClusterMarker(point_count)}
         </ClusterMarker>

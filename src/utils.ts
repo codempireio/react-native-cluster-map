@@ -1,14 +1,4 @@
-import { Marker } from 'react-native-maps';
-
 import { IClusterMapProps } from './cluster-map';
-
-export const createMarkers = (children: Marker[]) => {
-  if (!Array.isArray(children)) {
-    return [children];
-  }
-
-  return children;
-};
 
 const PACKAGE_PROPS = [
   'clusterOptions',

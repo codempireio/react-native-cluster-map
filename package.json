@@ -2,16 +2,27 @@
   "name": "react-native-maps-clusterize",
   "version": "1.0.0",
   "description": "\"React Native map clustering\"",
-  "main": "lib/index.js",
-  "module": "lib/index.es.js",
+  "homepage": "https://github.com/codempireio/react-native-maps-clusterize#readme",
+  "bugs": {
+    "url": "https://github.com/codempireio/react-native-maps-clusterize/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codempireio/react-native-maps-clusterize.git"
+  },
+  "license": "ISC",
+  "author": "codempire.io",
   "files": [
     "lib"
   ],
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "prettier": "prettier --config ./.prettierrc --write  \"./src/**/*.{ts,tsx}\"",
+    "build": "rollup -c",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
-    "build": "rollup -c"
+    "prettier": "prettier --config ./.prettierrc --write  \"./src/**/*.{ts,tsx}\"",
+    "sort": "sort-package-json"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -19,29 +30,6 @@
       "yarn lint",
       "git add"
     ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/codempireio/react-native-maps-clusterize.git"
-  },
-  "author": "codempire.io",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/codempireio/react-native-maps-clusterize/issues"
-  },
-  "homepage": "https://github.com/codempireio/react-native-maps-clusterize#readme",
-  "devDependencies": {
-    "@types/react": "^16.8.10",
-    "@types/react-native": "^0.57.42",
-    "@types/supercluster": "^5.0.1",
-    "babel-loader": "^8.0.5",
-    "prettier": "^1.16.4",
-    "rollup": "^1.8.0",
-    "rollup-plugin-typescript2": "^0.20.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-config-standard": "^8.0.1",
-    "tslint-react": "^4.0.0",
-    "typescript": "^3.4.1"
   },
   "dependencies": {
     "@mapbox/geo-viewport": "0.4.0",
@@ -51,5 +39,21 @@
     "react-native-maps": "^0.23.0",
     "supercluster": "^6.0.1",
     "tslint": "^5.15.0"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.3",
+    "@types/react": "^16.8.10",
+    "@types/react-native": "^0.57.42",
+    "@types/supercluster": "^5.0.1",
+    "babel-loader": "^8.0.5",
+    "lodash-es": "^4.17.11",
+    "prettier": "^1.16.4",
+    "rollup": "^1.8.0",
+    "rollup-plugin-typescript2": "^0.20.1",
+    "sort-package-json": "^1.22.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.4.1"
   }
 }
