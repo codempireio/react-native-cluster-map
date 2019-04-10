@@ -37,6 +37,7 @@
     "react": "^16.8.5",
     "react-native": "^0.59.2",
     "react-native-maps": "^0.23.0",
+    "lodash-es": "^4.17.11",
     "supercluster": "^6.0.1",
     "tslint": "^5.15.0"
   },
@@ -46,7 +47,6 @@
     "@types/react-native": "^0.57.42",
     "@types/supercluster": "^5.0.1",
     "babel-loader": "^8.0.5",
-    "lodash-es": "^4.17.11",
     "prettier": "^1.16.4",
     "rollup": "^1.8.0",
     "rollup-plugin-typescript2": "^0.20.1",

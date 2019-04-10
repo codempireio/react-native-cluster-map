@@ -6,19 +6,22 @@ import GoogleMapView, {
   Region,
   MapViewProps,
 } from 'react-native-maps';
-import Supercluster from 'supercluster';
+import SuperCluster from 'supercluster';
 
 import { ClusterMarker } from './cluster-marker';
 
 import { clusterService } from './cluster-service';
 import * as utils from './utils';
 
+const CLUSTER_EXPAND_TIME = 100;
+
 export interface IClusterMapProps extends MapViewProps {
-  superclusterOptions?: object;
+  isClusterExpandClick: boolean;
+  superClusterOptions?: object;
   region: Region;
   children: Marker[];
-  renderClusterMarker: (pointCount: number) => ReactNode;
   style: StyleProp<ViewProps>;
+  renderClusterMarker: (pointCount: number) => ReactNode;
   onMapReady: () => void;
   onClusterClick: () => void;
   onRegionChangeComplete: (region: Region) => void;
@@ -26,15 +29,19 @@ export interface IClusterMapProps extends MapViewProps {
 
 interface IClusterMapState {
   markers:
-    | Array<Supercluster.ClusterFeature<any>>
-    | Array<Supercluster.PointFeature<any>>;
+  | Array<SuperCluster.ClusterFeature<any>>
+  | Array<SuperCluster.PointFeature<any>>;
   isMapLoaded: boolean;
 }
 
 export class ClusterMap extends React.PureComponent<
   IClusterMapProps,
   IClusterMapState
-> {
+  > {
+  public static defaultProps: Partial<IClusterMapProps> = {
+    isClusterExpandClick: true,
+  };
+  public mapRef: GoogleMapView;
   public state: IClusterMapState = {
     markers: [],
     isMapLoaded: false,
@@ -46,6 +53,7 @@ export class ClusterMap extends React.PureComponent<
     return (
       <GoogleMapView
         {...utils.serializeProps(this.props)}
+        ref={(ref) => this.mapRef = ref}
         style={style || styles.map}
         onMapReady={this.onMapReady}
         initialRegion={region}
@@ -81,11 +89,19 @@ export class ClusterMap extends React.PureComponent<
   };
 
   private clusterize = () => {
-    const { superclusterOptions, region, children } = this.props;
+    const { superClusterOptions, region, children } = this.props;
 
-    clusterService.createClusters(superclusterOptions, children);
+    clusterService.createClusters(superClusterOptions, children);
     this.generateMarkers(region);
   };
+
+  private onClusterMarkerPress = (clusterId: number) => {
+    if (this.props.isClusterExpandClick) {
+      const region = clusterService.expandCluster(clusterId)
+      this.mapRef.animateToRegion(region, CLUSTER_EXPAND_TIME);
+    }
+    this.props.onClusterClick && this.props.onClusterClick();
+  }
 
   private renderMarkers = () => {
     const { markers } = this.state;
@@ -105,7 +121,8 @@ export class ClusterMap extends React.PureComponent<
         <ClusterMarker
           pointCount={point_count}
           coordinates={geometry.coordinates}
-          onClusterClick={onClusterClick}
+          onClusterMarkerPress={this.onClusterMarkerPress}
+          clusterId={marker.properties.cluster_id}
           key={key}
         >
           {renderClusterMarker && renderClusterMarker(point_count)}
