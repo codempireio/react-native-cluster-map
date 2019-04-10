@@ -6,20 +6,22 @@ interface IClusterMarkerProps {
   coordinates: number[];
   pointCount: number;
   children: React.ReactNode;
-  onClusterClick: () => void;
+  clusterId: number
+  onClusterMarkerPress: (clusterId: number) => void;
 }
 
 export const ClusterMarker = (props: IClusterMarkerProps) => {
-  const { coordinates, pointCount, children, onClusterClick } = props;
+  const { coordinates, pointCount, children, onClusterMarkerPress, clusterId } = props;
 
   if (pointCount < 0) {
     return null;
   }
 
+  const onClusterPress = () => onClusterMarkerPress(clusterId);
   const [longitude, latitude] = coordinates;
 
   return (
-    <Marker coordinate={{ longitude, latitude }} onPress={onClusterClick}>
+    <Marker coordinate={{ longitude, latitude }} onPress={onClusterPress}>
       {children || (
         <View style={styles.clusterBox}>
           <Text style={styles.clusterText}>{pointCount}</Text>

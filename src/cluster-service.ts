@@ -1,8 +1,8 @@
 import { Dimensions } from 'react-native';
-import Supercluster from 'supercluster';
+import SuperCluster from 'supercluster';
 import { isEqual } from 'lodash-es';
 
-import { Feature, Point, BBox } from 'geojson';
+import { Feature, Point, BBox, GeoJsonProperties } from 'geojson';
 import { Region, Marker } from 'react-native-maps';
 
 const DEFAULT_SUPERCLUSTER_OPTIONS = {
@@ -12,13 +12,20 @@ const DEFAULT_SUPERCLUSTER_OPTIONS = {
   nodeSize: 16,
 };
 
+const INCREASE_RATE = 2;
+
+interface ICoords {
+  latitude: number;
+  longitude: number;
+}
+
 class ClusterService {
-  private superCluster: Supercluster = null;
+  private superCluster: SuperCluster = null;
   private markers: Array<Feature<Point>> = null;
 
   public createClusters(propsOptions: object, children: Marker[]) {
     const options = propsOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
-    this.superCluster = new Supercluster(options);
+    this.superCluster = new SuperCluster(options);
     this.markers = this.createMarkers(children).map(this.itemToGeoJSONFeature);
 
     this.superCluster.load(this.markers);
@@ -33,6 +40,13 @@ class ClusterService {
 
   public isMarkersChanged = (children: Marker[]) => {
     return isEqual(this.markers, this.createMarkers(children));
+  };
+
+  public expandCluster = (clusterId: number): Region => {
+    const clusterMarkersCoordinates = this.getClusterMarkers(clusterId).map(
+      this.getMarkersCoordinates
+    );
+    return this.getMarkersRegion(clusterMarkersCoordinates);
   };
 
   private itemToGeoJSONFeature = (item: Marker): Feature<Point> => ({
@@ -101,6 +115,50 @@ class ClusterService {
     }
 
     return children;
+  };
+
+  private getClusterMarkers = (
+    clusterId: number
+  ): Array<SuperCluster.PointFeature<GeoJsonProperties>> => {
+    const clusterChildren = this.superCluster.getChildren(clusterId);
+    if (clusterChildren.length > 1) {
+      return clusterChildren;
+    }
+    return this.getClusterMarkers(clusterChildren[0].id as number);
+  };
+
+  private getMarkersRegion = (points: ICoords[]): Region => {
+    let coordinates = {
+      minX: points[0].latitude,
+      maxX: points[0].latitude,
+      maxY: points[0].longitude,
+      minY: points[0].longitude,
+    };
+
+    coordinates = points.reduce(
+      (acc, point) => ({
+        minX: Math.min(acc.minX, point.latitude),
+        maxX: Math.max(acc.maxX, point.latitude),
+        minY: Math.min(acc.minY, point.longitude),
+        maxY: Math.max(acc.maxY, point.longitude),
+      }),
+      { ...coordinates }
+    );
+
+    const deltaX = coordinates.maxX - coordinates.minX;
+    const deltaY = coordinates.maxY - coordinates.minY;
+
+    return {
+      latitude: (coordinates.minX + coordinates.maxX) / 2, // calculate center between min and max
+      longitude: (coordinates.minY + coordinates.maxY) / 2, // calculate center between min and max
+      latitudeDelta: deltaX * INCREASE_RATE,
+      longitudeDelta: deltaY * INCREASE_RATE,
+    };
+  };
+
+  private getMarkersCoordinates = (markers: Feature<Point>) => {
+    const [longitude, latitude] = markers.geometry.coordinates;
+    return { longitude, latitude };
   };
 }
 
