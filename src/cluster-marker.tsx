@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Marker } from 'react-native-maps';
 
-interface IClusterMarkerProps {
+export interface IClusterMarkerProps {
   coordinates: number[];
   pointCount: number;
   children: React.ReactNode;
