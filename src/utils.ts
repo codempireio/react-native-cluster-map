@@ -1,9 +1,9 @@
 import { IClusterMapProps } from './cluster-map';
 
 const PACKAGE_PROPS = [
-  'clusterOptions',
+  'isClusterExpandClick',
+  'superClusterOptions',
   'renderClusterMarker',
-  'customMarker',
   'style',
   'onMapReady',
   'onRegionChangeComplete',

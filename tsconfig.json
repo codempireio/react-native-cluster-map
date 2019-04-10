@@ -3,6 +3,7 @@
     "module": "commonjs",
     "jsx": "react",
     "noImplicitAny": true,
+    "declaration": true,
     "target": "es6",
     "noEmit": true,
     "allowSyntheticDefaultImports": true,

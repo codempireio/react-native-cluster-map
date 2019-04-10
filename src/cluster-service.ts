@@ -1,9 +1,10 @@
+import { ReactElement } from 'react';
 import { Dimensions } from 'react-native';
 import SuperCluster from 'supercluster';
 import { isEqual } from 'lodash-es';
 
 import { Feature, Point, BBox, GeoJsonProperties } from 'geojson';
-import { Region, Marker } from 'react-native-maps';
+import { Region } from 'react-native-maps';
 
 const DEFAULT_SUPERCLUSTER_OPTIONS = {
   radius: 16,
@@ -23,7 +24,7 @@ class ClusterService {
   private superCluster: SuperCluster = null;
   private markers: Array<Feature<Point>> = null;
 
-  public createClusters(propsOptions: object, children: Marker[]) {
+  public createClusters(propsOptions: object, children: ReactElement[] | ReactElement) {
     const options = propsOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
     this.superCluster = new SuperCluster(options);
     this.markers = this.createMarkers(children).map(this.itemToGeoJSONFeature);
@@ -38,7 +39,7 @@ class ClusterService {
     return this.superCluster.getClusters(bBox, zoom);
   };
 
-  public isMarkersChanged = (children: Marker[]) => {
+  public isMarkersChanged = (children: ReactElement[] | ReactElement) => {
     return isEqual(this.markers, this.createMarkers(children));
   };
 
@@ -49,7 +50,7 @@ class ClusterService {
     return this.getMarkersRegion(clusterMarkersCoordinates);
   };
 
-  private itemToGeoJSONFeature = (item: Marker): Feature<Point> => ({
+  private itemToGeoJSONFeature = (item: ReactElement): Feature<Point> => ({
     type: 'Feature',
     geometry: {
       type: 'Point',
@@ -105,7 +106,7 @@ class ClusterService {
     };
   };
 
-  private createMarkers = (children: Marker[]) => {
+  private createMarkers = (children: ReactElement[] | ReactElement) => {
     if (!children) {
       return [];
     }

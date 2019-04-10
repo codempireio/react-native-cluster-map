@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, ReactElement } from 'react';
 import { StyleSheet, StyleProp, ViewProps } from 'react-native';
 import GoogleMapView, {
   PROVIDER_GOOGLE,
@@ -19,7 +19,7 @@ export interface IClusterMapProps extends MapViewProps {
   isClusterExpandClick: boolean;
   superClusterOptions?: object;
   region: Region;
-  children: Marker[];
+  children: ReactElement[] | ReactElement;
   style: StyleProp<ViewProps>;
   renderClusterMarker: (pointCount: number) => ReactNode;
   onMapReady: () => void;
@@ -105,7 +105,7 @@ export class ClusterMap extends React.PureComponent<
 
   private renderMarkers = () => {
     const { markers } = this.state;
-    const { onClusterClick, renderClusterMarker } = this.props;
+    const { renderClusterMarker } = this.props;
 
     return markers.map((marker) => {
       const { properties, geometry } = marker;
