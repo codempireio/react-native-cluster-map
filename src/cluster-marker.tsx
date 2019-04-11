@@ -33,15 +33,17 @@ export const ClusterMarker = (props: IClusterMarkerProps) => {
 
 const styles = StyleSheet.create({
   clusterBox: {
-    height: 62,
-    width: 62,
-    backgroundColor: 'black',
+    height: 60,
+    width: 60,
+    borderWidth: 2,
+    borderColor: '#5694f7',
+    backgroundColor: '#fff',
     borderRadius: 31,
     alignItems: 'center',
     justifyContent: 'center',
   },
   clusterText: {
     fontSize: 19,
-    color: '#fff',
+    color: '#5694f7',
   },
 });

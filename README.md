@@ -4,7 +4,11 @@ React Native component that adds map clustering
 
 ## Examples
 
-> Here will be examples
+| Zoom in | Zoom out |
+| --- | --- |
+| ![](example/images/zoom-out.gif) | ![](example/images/zoom-in.gif) |
+| **Cluster Expand** | **Nested Cluster Expand** |
+| ![](example/images/cluster-expand.gif) | ![](example/images/nested-cluster-expand.gif) |
 
 ## Installation
 
@@ -35,6 +39,65 @@ import { ClusterMap } from "react-native-maps-clusterize";
   <Marker coordinate={{ latitude:37.78825, longitude:-122.4324 }} />
 </ClusterMap>
 ```
+
+### Custom Cluster Marker
+
+You can customize cluster marker with **renderClusterMarker** prop
+
+> *MyMap.jsx*
+
+```
+import { Marker } from "react-native-maps";
+import { MyCluster } from "./MyCluster";
+
+// ...
+
+renderCustomClusterMarker = (count) => <MyCluster count={count} />
+
+render () {
+  const { markers, region } = this.state;
+  return (
+    <ClusterMap
+      renderClusterMarker={this.renderCustomClusterMarker}
+      region={region}
+    >
+      {markers.map((marker) => (
+          <Marker {...marker} />
+      ))}
+    <ClusterMap>
+  )
+}
+
+```
+
+> *MyCluster.jsx*
+```
+import * as React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+export const MyCluster = (props) => {
+  const { count } = props;
+  return (
+    <View style={styles}>
+      <Text>{count}</Text>
+    </View>
+  )
+}
+
+const styles = StyleSheet.create({
+  width: 50,
+  height: 50,
+  borderRadius: 25,
+  backgroundColor: 'red',
+  justifyContent: 'center',
+  alignItems: 'center'
+})
+```
+
+**Result**
+
+![](example/images/custom-marker.png)
+
 
 ## Props
 
