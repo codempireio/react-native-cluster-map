@@ -1,0 +1,14 @@
+language: node_js
+node_js: node
+
+before_deploy:
+  - npm run lint
+  - npm run prettier
+
+deploy:
+  provider: npm
+  email: $EMAIL_ADDRESS
+  api_key: $NPM_AUTH_TOKEN
+  tag: next
+  on:
+    branch: master

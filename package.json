@@ -13,7 +13,8 @@
   "license": "ISC",
   "author": "codempire.io",
   "files": [
-    "lib"
+    "lib",
+    "example"
   ],
   "main": "lib/index.js",
   "module": "lib/index.es.js",
