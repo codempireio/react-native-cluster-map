@@ -1,28 +1,38 @@
 # react-native-maps-clusterize
 
-React Native component that adds map clustering 
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![Build Status](https://travis-ci.org/codempireio/react-native-maps-clusterize.svg?branch=master)](https://travis-ci.org/codempireio/react-native-maps-clusterize)
+[![Version](https://img.shields.io/npm/v/react-native-maps-clusterize.svg)](https://www.npmjs.com/package/react-native-maps-clusterize)
+[![npm](https://img.shields.io/npm/dt/react-native-maps-clusterize.svg)](https://www.npmjs.com/package/react-native-maps-clusterize)
+[![Email](https://img.shields.io/badge/contact-CODEMPIRE-blue.svg?style=flat)](mailto:info@codempire.io)
+
+React Native MapView clustering component for iOS + Android
+
+___
+
+Made by [CODEMPIRE](http://codempire.io/)
 
 ## Examples
 
-| Zoom in | Zoom out |
-| --- | --- |
-| ![](example/images/zoom-out.gif) | ![](example/images/zoom-in.gif) |
-| **Cluster Expand** | **Nested Cluster Expand** |
-| ![](example/images/cluster-expand.gif) | ![](example/images/nested-cluster-expand.gif) |
+| Zoom in                                                      | Zoom out                                                                   |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------- |
+| ![Example zoom out](example/images/zoom-out.gif)             | ![Example zoom in](example/images/zoom-in.gif)                             |
+| **Cluster Expand**                                           | **Nested Cluster Expand**                                                  |
+| ![Example cluster expand](example/images/cluster-expand.gif) | ![Example nested cluster expand](example/images/nested-cluster-expand.gif) |
 
 ## Installation
 
 1. Install [`react-native-maps`](https://github.com/react-native-community/react-native-maps/blob/master/docs/installation.md)
 
-2) Install this component
+2. Install this component
 
-```
+```bash
 npm install --save react-native-maps-clusterize
 ```
 
 ## Usage
 
-```
+```javascript
 import { Marker } from "react-native-maps";
 import { ClusterMap } from "react-native-maps-clusterize";
 
@@ -46,7 +56,7 @@ You can customize cluster marker with **renderClusterMarker** prop
 
 > *MyMap.jsx*
 
-```
+```javascript
 import { Marker } from "react-native-maps";
 import { MyCluster } from "./MyCluster";
 
@@ -71,7 +81,8 @@ render () {
 ```
 
 > *MyCluster.jsx*
-```
+
+```javascript
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -94,20 +105,19 @@ const styles = StyleSheet.create({
 })
 ```
 
-**Result**
+### Result
 
-![](example/images/custom-marker.png)
-
+![Custom Marker Example](example/images/custom-marker.png)
 
 ## Props
 
-| Props                    | Type         | Default                                               | Note                                   |
-| ------------------------ | ------------ | ----------------------------------------------------- | -------------------------------------- |
-| **superClusterOptions**  | _Options_    | { radius: 16, maxZoom: 15, minZoom: 1, nodeSize: 16 } | SuperCluster lib options       |
-| **isClusterExpandClick** | _boolean_    | true                                                  | Enables cluster zoom on click              |
-| **region**               | _Region_     | **_required_**                                                    | Google Map Region |
-| **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }                                                    | Returns cluster marker component         |
-| **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView
+| Props                    | Type         | Default                                               | Note                             |
+| ------------------------ | ------------ | ----------------------------------------------------- | -------------------------------- |
+| **superClusterOptions**  | _Options_    | { radius: 16, maxZoom: 15, minZoom: 1, nodeSize: 16 } | SuperCluster lib options         |
+| **isClusterExpandClick** | _boolean_    | true                                                  | Enables cluster zoom on click    |
+| **region**               | _Region_     | **_required_**                                        | Google Map Region                |
+| **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component |
+| **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView              |
 
 ___
 
@@ -115,11 +125,10 @@ ___
 
 ## Events
 
-| Event Name | Returns | Notes |
-| --- | --- | --- |
-| **onClusterClick** | void | Callback that is called when the user pressed on the **_cluster_** marker |
+| Event Name         | Returns | Notes                                                                     |
+| ------------------ | ------- | ------------------------------------------------------------------------- |
+| **onClusterClick** | void    | Callback that is called when the user pressed on the **_cluster_** marker |
 
 ___
 
 > Also contains react-native-maps [\<MapView /> Events](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md#events)
-

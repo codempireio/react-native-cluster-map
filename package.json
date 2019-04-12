@@ -1,7 +1,21 @@
 {
   "name": "react-native-maps-clusterize",
-  "version": "1.0.0",
-  "description": "\"React Native map clustering\"",
+  "version": "1.0.1",
+  "description": "React Native MapView clustering component for iOS + Android",
+  "keywords": [
+    "android",
+    "cluster",
+    "clustering",
+    "geolocation",
+    "google-maps",
+    "iOS",
+    "map",
+    "map-cluster",
+    "react",
+    "react-component",
+    "react-native",
+    "supercluster"
+  ],
   "homepage": "https://github.com/codempireio/react-native-maps-clusterize#readme",
   "bugs": {
     "url": "https://github.com/codempireio/react-native-maps-clusterize/issues"
@@ -10,7 +24,7 @@
     "type": "git",
     "url": "git+https://github.com/codempireio/react-native-maps-clusterize.git"
   },
-  "license": "ISC",
+  "license": "MIT",
   "author": "codempire.io",
   "files": [
     "lib",
@@ -35,10 +49,10 @@
   "dependencies": {
     "@mapbox/geo-viewport": "0.4.0",
     "geojson": "^0.5.0",
+    "lodash-es": "^4.17.11",
     "react": "^16.8.5",
     "react-native": "^0.59.2",
     "react-native-maps": "^0.23.0",
-    "lodash-es": "^4.17.11",
     "supercluster": "^6.0.1",
     "tslint": "^5.15.0"
   },
