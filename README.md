@@ -1,7 +1,6 @@
 # react-native-maps-clusterize
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
-[![Build Status](https://travis-ci.org/codempireio/react-native-maps-clusterize.svg?branch=master)](https://travis-ci.org/codempireio/react-native-maps-clusterize)
 [![Version](https://img.shields.io/npm/v/react-native-maps-clusterize.svg)](https://www.npmjs.com/package/react-native-maps-clusterize)
 [![npm](https://img.shields.io/npm/dt/react-native-maps-clusterize.svg)](https://www.npmjs.com/package/react-native-maps-clusterize)
 [![Email](https://img.shields.io/badge/contact-CODEMPIRE-blue.svg?style=flat)](mailto:info@codempire.io)
