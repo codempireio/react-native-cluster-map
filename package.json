@@ -1,6 +1,6 @@
 {
   "name": "react-native-maps-clusterize",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native MapView clustering component for iOS + Android",
   "keywords": [
     "android",
@@ -36,6 +36,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
+    "prepublishOnly": "yarn build",
     "prettier": "prettier --config ./.prettierrc --write  \"./src/**/*.{ts,tsx}\"",
     "sort": "sort-package-json"
   },
@@ -48,27 +49,32 @@
   },
   "dependencies": {
     "@mapbox/geo-viewport": "0.4.0",
-    "geojson": "^0.5.0",
-    "lodash-es": "^4.17.11",
-    "react": "^16.8.5",
-    "react-native": "^0.59.2",
-    "react-native-maps": "^0.23.0",
-    "supercluster": "^6.0.1",
-    "tslint": "^5.15.0"
+    "geojson": "0.5.0",
+    "lodash.isequal": "4.5.0",
+    "supercluster": "6.0.0"
   },
   "devDependencies": {
-    "@types/lodash-es": "^4.17.3",
-    "@types/react": "^16.8.10",
-    "@types/react-native": "^0.57.42",
-    "@types/supercluster": "^5.0.1",
-    "babel-loader": "^8.0.5",
-    "prettier": "^1.16.4",
-    "rollup": "^1.8.0",
-    "rollup-plugin-typescript2": "^0.20.1",
-    "sort-package-json": "^1.22.1",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-config-standard": "^8.0.1",
-    "tslint-react": "^4.0.0",
-    "typescript": "^3.4.1"
+    "@types/lodash.isequal": "4.5.5",
+    "@types/react": "16.8.10",
+    "@types/react-native": "0.57.42",
+    "@types/supercluster": "5.0.1",
+    "babel-loader": "8.0.5",
+    "prettier": "1.16.4",
+    "react": "16.8.4",
+    "react-native": "0.59.2",
+    "react-native-maps": "0.23.0",
+    "rollup": "1.8.0",
+    "rollup-plugin-typescript2": "0.20.1",
+    "sort-package-json": "1.22.1",
+    "tslint": "5.15.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-config-standard": "8.0.1",
+    "tslint-react": "4.0.0",
+    "typescript": "3.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.0.0",
+    "react-native": ">=0.50.0",
+    "react-native-maps": ">=0.23.0"
   }
 }

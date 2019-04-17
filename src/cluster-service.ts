@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { Dimensions } from 'react-native';
 import SuperCluster from 'supercluster';
-import { isEqual } from 'lodash-es';
+import isEqual from 'lodash.isequal';
 
 import { Feature, Point, BBox, GeoJsonProperties } from 'geojson';
 import { Region } from 'react-native-maps';
@@ -24,7 +24,10 @@ class ClusterService {
   private superCluster: SuperCluster = null;
   private markers: Array<Feature<Point>> = null;
 
-  public createClusters(propsOptions: object, children: ReactElement[] | ReactElement) {
+  public createClusters(
+    propsOptions: object,
+    children: ReactElement[] | ReactElement
+  ) {
     const options = propsOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
     this.superCluster = new SuperCluster(options);
     this.markers = this.createMarkers(children).map(this.itemToGeoJSONFeature);
