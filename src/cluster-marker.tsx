@@ -6,12 +6,18 @@ export interface IClusterMarkerProps {
   coordinates: number[];
   pointCount: number;
   children: React.ReactNode;
-  clusterId: number
+  clusterId: number;
   onClusterMarkerPress: (clusterId: number) => void;
 }
 
 export const ClusterMarker = (props: IClusterMarkerProps) => {
-  const { coordinates, pointCount, children, onClusterMarkerPress, clusterId } = props;
+  const {
+    coordinates,
+    pointCount,
+    children,
+    onClusterMarkerPress,
+    clusterId,
+  } = props;
 
   if (pointCount < 0) {
     return null;

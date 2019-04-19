@@ -1,7 +1,6 @@
 import { ReactElement } from 'react';
 import { Dimensions } from 'react-native';
 import SuperCluster from 'supercluster';
-import isEqual from 'lodash.isequal';
 
 import { Feature, Point, BBox, GeoJsonProperties } from 'geojson';
 import { Region } from 'react-native-maps';
@@ -30,7 +29,7 @@ class ClusterService {
   ) {
     const options = propsOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
     this.superCluster = new SuperCluster(options);
-    this.markers = this.createMarkers(children).map(this.itemToGeoJSONFeature);
+    this.markers = this.createMarkers(children).map(this.createGeoJsonFeature);
 
     this.superCluster.load(this.markers);
   }
@@ -42,10 +41,6 @@ class ClusterService {
     return this.superCluster.getClusters(bBox, zoom);
   };
 
-  public isMarkersChanged = (children: ReactElement[] | ReactElement) => {
-    return isEqual(this.markers, this.createMarkers(children));
-  };
-
   public expandCluster = (clusterId: number): Region => {
     const clusterMarkersCoordinates = this.getClusterMarkers(clusterId).map(
       this.getMarkersCoordinates
@@ -53,16 +48,16 @@ class ClusterService {
     return this.getMarkersRegion(clusterMarkersCoordinates);
   };
 
-  private itemToGeoJSONFeature = (item: ReactElement): Feature<Point> => ({
+  private createGeoJsonFeature = (element: ReactElement): Feature<Point> => ({
     type: 'Feature',
     geometry: {
       type: 'Point',
       coordinates: [
-        item.props.coordinate.longitude as number,
-        item.props.coordinate.latitude as number,
+        element.props.coordinate.longitude as number,
+        element.props.coordinate.latitude as number,
       ],
     },
-    properties: { point_count: 0, item },
+    properties: { element },
   });
 
   private getBoundsZoomLevel = (bounds: BBox) => {

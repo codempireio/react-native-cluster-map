@@ -2,11 +2,11 @@ import React, { ReactNode, ReactElement } from 'react';
 import { StyleSheet, StyleProp, ViewProps } from 'react-native';
 import GoogleMapView, {
   PROVIDER_GOOGLE,
-  Marker,
   Region,
   MapViewProps,
 } from 'react-native-maps';
 import SuperCluster from 'supercluster';
+import isEqual from 'lodash.isequal';
 
 import { ClusterMarker } from './cluster-marker';
 
@@ -29,15 +29,15 @@ export interface IClusterMapProps extends MapViewProps {
 
 interface IClusterMapState {
   markers:
-  | Array<SuperCluster.ClusterFeature<any>>
-  | Array<SuperCluster.PointFeature<any>>;
+    | Array<SuperCluster.ClusterFeature<any>>
+    | Array<SuperCluster.PointFeature<any>>;
   isMapLoaded: boolean;
 }
 
 export class ClusterMap extends React.PureComponent<
   IClusterMapProps,
   IClusterMapState
-  > {
+> {
   public static defaultProps: Partial<IClusterMapProps> = {
     isClusterExpandClick: true,
   };
@@ -53,7 +53,7 @@ export class ClusterMap extends React.PureComponent<
     return (
       <GoogleMapView
         {...utils.serializeProps(this.props)}
-        ref={(ref) => this.mapRef = ref}
+        ref={(ref) => (this.mapRef = ref)}
         style={style || styles.map}
         onMapReady={this.onMapReady}
         initialRegion={region}
@@ -69,11 +69,11 @@ export class ClusterMap extends React.PureComponent<
     this.clusterize();
   }
 
-  public componentWillReceiveProps(nextProps: IClusterMapProps) {
-    const { children } = nextProps;
-    if (clusterService.isMarkersChanged(children)) {
-      this.clusterize();
+  public componentDidUpdate(prevProps: IClusterMapProps) {
+    if (isEqual(this.props.children, prevProps.children)) {
+      return;
     }
+    this.clusterize();
   }
 
   private generateMarkers(region: Region) {
@@ -97,11 +97,11 @@ export class ClusterMap extends React.PureComponent<
 
   private onClusterMarkerPress = (clusterId: number) => {
     if (this.props.isClusterExpandClick) {
-      const region = clusterService.expandCluster(clusterId)
+      const region = clusterService.expandCluster(clusterId);
       this.mapRef.animateToRegion(region, CLUSTER_EXPAND_TIME);
     }
     this.props.onClusterClick && this.props.onClusterClick();
-  }
+  };
 
   private renderMarkers = () => {
     const { markers } = this.state;
@@ -109,12 +109,12 @@ export class ClusterMap extends React.PureComponent<
 
     return markers.map((marker) => {
       const { properties, geometry } = marker;
-      const { cluster, item, point_count } = properties;
+      const { cluster, element, point_count } = properties;
 
       const key = utils.makeId();
 
-      if (!cluster && item) {
-        return <Marker {...item.props} key={key} />;
+      if (!cluster && element) {
+        return element;
       }
 
       return (
