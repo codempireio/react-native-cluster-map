@@ -18,6 +18,7 @@ const CLUSTER_EXPAND_TIME = 100;
 export interface IClusterMapProps extends MapViewProps {
   isClusterExpandClick: boolean;
   superClusterOptions?: object;
+  priorityMarker?: ReactElement;
   region: Region;
   children: ReactElement[] | ReactElement;
   style: StyleProp<ViewProps>;
@@ -48,7 +49,7 @@ export class ClusterMap extends React.PureComponent<
   };
 
   public render() {
-    const { style, region } = this.props;
+    const { style, region, priorityMarker } = this.props;
 
     return (
       <GoogleMapView
@@ -61,6 +62,7 @@ export class ClusterMap extends React.PureComponent<
         provider={PROVIDER_GOOGLE}
       >
         {this.state.isMapLoaded && this.renderMarkers()}
+        {priorityMarker ? priorityMarker : null}
       </GoogleMapView>
     );
   }
@@ -96,11 +98,12 @@ export class ClusterMap extends React.PureComponent<
   };
 
   private onClusterMarkerPress = (clusterId: number) => {
-    if (this.props.isClusterExpandClick) {
+    const { isClusterExpandClick, onClusterClick } = this.props;
+    if (isClusterExpandClick) {
       const region = clusterService.expandCluster(clusterId);
       this.mapRef.animateToRegion(region, CLUSTER_EXPAND_TIME);
     }
-    this.props.onClusterClick && this.props.onClusterClick();
+    onClusterClick && onClusterClick();
   };
 
   private renderMarkers = () => {

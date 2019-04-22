@@ -9,6 +9,7 @@ const PACKAGE_PROPS = [
   'onRegionChangeComplete',
   'region',
   'onClusterClick',
+  'priorityMarker'
 ];
 
 export const serializeProps = (userProps: IClusterMapProps) => {
