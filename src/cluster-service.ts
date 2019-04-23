@@ -34,11 +34,14 @@ class ClusterService {
     this.superCluster.load(this.markers);
   }
 
-  public getClusters = (region: Region) => {
+  public getClustersOptions = (region: Region) => {
     const bBox = this.regionTobBox(region);
     const zoom = this.getBoundsZoomLevel(bBox);
 
-    return this.superCluster.getClusters(bBox, zoom);
+    return {
+      markers: this.superCluster.getClusters(bBox, zoom),
+      zoom
+    };
   };
 
   public expandCluster = (clusterId: number): Region => {

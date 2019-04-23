@@ -22,6 +22,7 @@ export interface IClusterMapProps extends MapViewProps {
   region: Region;
   children: ReactElement[] | ReactElement;
   style: StyleProp<ViewProps>;
+  onZoomChange?: (zoom: number) => void;
   renderClusterMarker: (pointCount: number) => ReactNode;
   onMapReady: () => void;
   onClusterClick: () => void;
@@ -79,8 +80,13 @@ export class ClusterMap extends React.PureComponent<
   }
 
   private generateMarkers(region: Region) {
+    const { onZoomChange } = this.props;
+    const { markers, zoom } = clusterService.getClustersOptions(region);
+    if (onZoomChange) {
+      onZoomChange(zoom);
+    }
     this.setState({
-      markers: clusterService.getClusters(region),
+      markers,
     });
   }
 

@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
 | **superClusterOptions**  | _Options_    | { radius: 16, maxZoom: 15, minZoom: 1, nodeSize: 16 } | SuperCluster lib options         |
 | **isClusterExpandClick** | _boolean_    | true                                                  | Enables cluster zoom on click    |
 | **region**               | _Region_     | **_required_**                                        | Google Map Region                |
+| **priorityMarker**  | _ReactNode_    | null | Marker which will be outside of clusters       
 | **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component |
 | **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView              |
 
@@ -127,6 +128,7 @@ ___
 | Event Name         | Returns | Notes                                                                     |
 | ------------------ | ------- | ------------------------------------------------------------------------- |
 | **onClusterClick** | void    | Callback that is called when the user pressed on the **_cluster_** marker |
+| **onZoomChange**   | void    | Callback that is called with updated map zoom in **number**     
 
 ___
 
