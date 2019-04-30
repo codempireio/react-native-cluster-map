@@ -1,6 +1,6 @@
 {
-  "name": "react-native-maps-clusterize",
-  "version": "1.0.6",
+  "name": "react-native-cluster-map",
+  "version": "1.0.1",
   "description": "React Native MapView clustering component for iOS + Android",
   "keywords": [
     "android",
@@ -16,13 +16,13 @@
     "react-native",
     "supercluster"
   ],
-  "homepage": "https://github.com/codempireio/react-native-maps-clusterize#readme",
+  "homepage": "https://github.com/codempireio/react-native-cluster-map#readme",
   "bugs": {
-    "url": "https://github.com/codempireio/react-native-maps-clusterize/issues"
+    "url": "https://github.com/codempireio/react-native-cluster-map/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codempireio/react-native-maps-clusterize.git"
+    "url": "git+https://github.com/codempireio/react-native-cluster-map.git"
   },
   "license": "MIT",
   "author": "codempire.io",

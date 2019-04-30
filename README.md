@@ -1,8 +1,8 @@
-# react-native-maps-clusterize
+# react-native-cluster-map
 
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
-[![Version](https://img.shields.io/npm/v/react-native-maps-clusterize.svg)](https://www.npmjs.com/package/react-native-maps-clusterize)
-[![npm](https://img.shields.io/npm/dt/react-native-maps-clusterize.svg)](https://www.npmjs.com/package/react-native-maps-clusterize)
+[![Version](https://img.shields.io/npm/v/react-native-cluster-map.svg)](https://www.npmjs.com/package/react-native-cluster-map)
+[![npm](https://img.shields.io/npm/dt/react-native-cluster-map.svg)](https://www.npmjs.com/package/react-native-cluster-map)
 [![Email](https://img.shields.io/badge/contact-CODEMPIRE-blue.svg?style=flat)](mailto:info@codempire.io)
 
 React Native MapView clustering component for iOS + Android
@@ -26,14 +26,14 @@ Made by [CODEMPIRE](http://codempire.io/)
 2. Install this component
 
 ```bash
-npm install --save react-native-maps-clusterize
+npm install --save react-native-cluster-map
 ```
 
 ## Usage
 
 ```javascript
 import { Marker } from "react-native-maps";
-import { ClusterMap } from "react-native-maps-clusterize";
+import { ClusterMap } from "react-native-cluster-map";
 
 <ClusterMap
   region={{
@@ -110,14 +110,14 @@ const styles = StyleSheet.create({
 
 ## Props
 
-| Props                    | Type         | Default                                               | Note                             |
-| ------------------------ | ------------ | ----------------------------------------------------- | -------------------------------- |
-| **superClusterOptions**  | _Options_    | { radius: 16, maxZoom: 15, minZoom: 1, nodeSize: 16 } | SuperCluster lib options         |
-| **isClusterExpandClick** | _boolean_    | true                                                  | Enables cluster zoom on click    |
-| **region**               | _Region_     | **_required_**                                        | Google Map Region                |
-| **priorityMarker**  | _ReactNode_    | null | Marker which will be outside of clusters       
-| **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component |
-| **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView              |
+| Props                    | Type         | Default                                               | Note                                     |
+| ------------------------ | ------------ | ----------------------------------------------------- | ---------------------------------------- |
+| **superClusterOptions**  | _Options_    | { radius: 16, maxZoom: 15, minZoom: 1, nodeSize: 16 } | SuperCluster lib options                 |
+| **isClusterExpandClick** | _boolean_    | true                                                  | Enables cluster zoom on click            |
+| **region**               | _Region_     | **_required_**                                        | Google Map Region                        |
+| **priorityMarker**       | _ReactNode_  | null                                                  | Marker which will be outside of clusters |
+| **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component         |
+| **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView                      |
 
 ___
 
@@ -128,7 +128,7 @@ ___
 | Event Name         | Returns | Notes                                                                     |
 | ------------------ | ------- | ------------------------------------------------------------------------- |
 | **onClusterClick** | void    | Callback that is called when the user pressed on the **_cluster_** marker |
-| **onZoomChange**   | void    | Callback that is called with updated map zoom in **number**     
+| **onZoomChange**   | void    | Callback that is called with updated map zoom in **number**               |
 
 ___
 
