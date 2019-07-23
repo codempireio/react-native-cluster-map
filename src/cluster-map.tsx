@@ -1,5 +1,5 @@
 import React, { ReactNode, ReactElement } from 'react';
-import { StyleSheet, StyleProp, ViewProps } from 'react-native';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import GoogleMapView, {
   PROVIDER_GOOGLE,
   Region,
@@ -21,7 +21,7 @@ export interface IClusterMapProps extends MapViewProps {
   priorityMarker?: ReactElement;
   region: Region;
   children: ReactElement[] | ReactElement;
-  style: StyleProp<ViewProps>;
+  style: StyleProp<ViewStyle>;
   onZoomChange?: (zoom: number) => void;
   renderClusterMarker: (pointCount: number) => ReactNode;
   onMapReady: () => void;
