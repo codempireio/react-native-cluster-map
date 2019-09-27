@@ -9,5 +9,5 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "exclude": ["node_modules", "rollup.config.js"]
+  "exclude": ["node_modules", "rollup.config.js", "example", "src/spec"]
 }

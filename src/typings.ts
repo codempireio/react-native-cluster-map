@@ -24,8 +24,8 @@ export interface ICoords {
 
 export interface IClusterMapState {
   markers:
-  | Array<SuperCluster.ClusterFeature<any>>
-  | Array<SuperCluster.PointFeature<any>>;
+    | Array<SuperCluster.ClusterFeature<any>>
+    | Array<SuperCluster.PointFeature<any>>;
   isMapLoaded: boolean;
 }
 
@@ -42,4 +42,7 @@ export interface IClusterMarkerProps {
   onClusterMarkerPress: (clusterClickEvent: IClusterClickEvent) => void;
 }
 
-export interface IMarkerEvent { action: 'marker-press'; id: string }
+export interface IMarkerEvent {
+  action: 'marker-press';
+  id: string;
+}

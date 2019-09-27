@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 [![Version](https://img.shields.io/npm/v/react-native-cluster-map.svg)](https://www.npmjs.com/package/react-native-cluster-map)
 [![npm](https://img.shields.io/npm/dt/react-native-cluster-map.svg)](https://www.npmjs.com/package/react-native-cluster-map)
-[![Email](https://img.shields.io/badge/contact-CODEMPIRE-blue.svg?style=flat)](mailto:info@codempire.io)
+[![Email](https://img.shields.io/badge/contact-CODEMPIRE-blue.svg?style=flat)](mailto:sales@codempire.io)
 
 React Native MapView clustering component for iOS + Android
 

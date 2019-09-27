@@ -1,27 +1,34 @@
-import { ClusterService, INCREASE_RATE } from '../cluster-service';
-import { MockFeature, repeatElement, generateMockCoords } from './test-utils';
 import SuperCluster from 'supercluster';
 
-import { MOCKED_DEVICE_WIDTH, MOCKED_DEVICE_HEIGHT, mockedReactEl, mockedRegion } from './test-constants';
+import { ClusterService, INCREASE_RATE } from '../cluster-service';
+import { MockFeature, repeatElement, generateMockCoords } from './mock.utils';
+
+import {
+  MOCKED_DEVICE_WIDTH,
+  MOCKED_DEVICE_HEIGHT,
+  mockedReactEl,
+  mockedRegion,
+} from './mock.constants';
 
 jest.mock('react-native', () => ({
   Dimensions: {
-    get: jest.fn().mockImplementation(() => ({ width: MOCKED_DEVICE_WIDTH, height: MOCKED_DEVICE_HEIGHT }))
-  }
-}))
+    get: jest.fn().mockImplementation(() => ({
+      width: MOCKED_DEVICE_WIDTH,
+      height: MOCKED_DEVICE_HEIGHT,
+    })),
+  },
+}));
 
 describe('Service initialization', () => {
   let service: any = null as ClusterService;
 
   test('Cluster service init', () => {
-
     expect(service).toBeFalsy();
     service = new ClusterService();
     expect(service).toBeInstanceOf(ClusterService);
-  })
+  });
 
   test('ClusterService.createClusters init supercluster and markers', () => {
-
     expect(service.superCluster).toBeFalsy();
     expect(service.markers).toBeFalsy();
 
@@ -29,13 +36,11 @@ describe('Service initialization', () => {
 
     expect(service.superCluster).toBeInstanceOf(SuperCluster);
     expect(service.markers).toBeTruthy();
-  })
-})
+  });
+});
 
 describe('Service utils', () => {
   const service: any = new ClusterService();
-
-
 
   test('getMarkersCoordinates', () => {
     const longitude = 140;
@@ -46,13 +51,13 @@ describe('Service utils', () => {
 
     expect(result).toHaveProperty('longitude', longitude);
     expect(result).toHaveProperty('latitude', latitude);
-  })
+  });
 
   test('getDimensions get mocked Dimensions', () => {
     const result = service.getDimensions();
     expect(result).toHaveProperty('width', MOCKED_DEVICE_WIDTH);
     expect(result).toHaveProperty('height', MOCKED_DEVICE_HEIGHT);
-  })
+  });
 
   test('createGeoJsonFeature', () => {
     const expectedLongitude = 55;
@@ -63,7 +68,10 @@ describe('Service utils', () => {
 
     const result = service.createGeoJsonFeature(mockedReactEl);
 
-    const { type, geometry: { type: GType, coordinates } } = result;
+    const {
+      type,
+      geometry: { type: GType, coordinates },
+    } = result;
     const [resLongitude, resLatitude] = coordinates;
 
     expect(type).toBeTruthy();
@@ -74,7 +82,7 @@ describe('Service utils', () => {
 
     expect(resLongitude).toBe(expectedLongitude);
     expect(resLatitude).toBe(expectedLatitude);
-  })
+  });
 
   test('createMarkers should return array', () => {
     const result = service.createMarkers(mockedReactEl);
@@ -84,13 +92,13 @@ describe('Service utils', () => {
     expect(result).toHaveLength(1);
 
     const EXPECTED_LENGTH = 5;
-    const mockedElemList = repeatElement(mockedReactEl, EXPECTED_LENGTH)
+    const mockedElemList = repeatElement(mockedReactEl, EXPECTED_LENGTH);
 
     const result1 = service.createMarkers(mockedElemList);
     const isArray1 = Array.isArray(result1);
     expect(isArray1).toBeTruthy();
     expect(result1).toHaveLength(EXPECTED_LENGTH);
-  })
+  });
 
   test('getMarkersRegion', () => {
     const coordsListLength = 8;
@@ -100,8 +108,7 @@ describe('Service utils', () => {
 
     const expectedLongitude = (minValue + maxValue) / 2;
     const expectedLatitude = (minValue + maxValue) / 2;
-    const expectedDelta = (maxValue - minValue) * INCREASE_RATE
-
+    const expectedDelta = (maxValue - minValue) * INCREASE_RATE;
 
     const mockedCoords = generateMockCoords(coordsListLength);
     const result = service.getMarkersRegion(mockedCoords);
@@ -110,14 +117,11 @@ describe('Service utils', () => {
     expect(result).toHaveProperty('longitude', expectedLongitude);
     expect(result).toHaveProperty('latitudeDelta', expectedDelta);
     expect(result).toHaveProperty('longitudeDelta', expectedDelta);
-  })
+  });
 
   test('regionTobBox return array with length 4', () => {
     const result = service.regionTobBox(mockedRegion);
     expect(Array.isArray(result)).toBeTruthy();
-    expect(result).toHaveLength(4)
-  })
-})
-
-
-
+    expect(result).toHaveLength(4);
+  });
+});

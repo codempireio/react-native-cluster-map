@@ -37,7 +37,7 @@ export class ClusterService {
 
     return {
       markers: this.superCluster.getClusters(bBox, zoom),
-      zoom
+      zoom,
     };
   };
   // TODO: Add unit test
@@ -59,7 +59,7 @@ export class ClusterService {
     },
     properties: { element },
   });
-  
+
   // TODO: Add unit test
   private getBoundsZoomLevel = (bounds: BBox) => {
     const ZOOM_MAX = 20;
@@ -145,8 +145,8 @@ export class ClusterService {
       { ...coordinates }
     );
 
-    const deltaX = calculateDelta(maxX, minX)
-    const deltaY = calculateDelta(maxY, minY)
+    const deltaX = calculateDelta(maxX, minX);
+    const deltaY = calculateDelta(maxY, minY);
 
     return {
       latitude: calculateAverage(minX, maxX),
