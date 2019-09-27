@@ -1,6 +1,6 @@
 {
   "name": "react-native-cluster-map",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "React Native MapView clustering component for iOS + Android",
   "keywords": [
     "android",
@@ -37,8 +37,10 @@
     "build": "rollup -c",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "prepublishOnly": "yarn build",
+    "precommit": "lint-staged && npm test",
     "prettier": "prettier --config ./.prettierrc --write  \"./src/**/*.{ts,tsx}\"",
-    "sort": "sort-package-json"
+    "sort": "sort-package-json",
+    "test": "jest"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -49,6 +51,7 @@
   },
   "dependencies": {
     "@mapbox/geo-viewport": "0.4.0",
+    "@types/jest": "^24.0.18",
     "geojson": "0.5.0",
     "lodash.isequal": "4.5.0",
     "supercluster": "6.0.0"
@@ -57,12 +60,15 @@
     "@types/lodash.isequal": "4.5.5",
     "@types/react": "16.8.10",
     "@types/react-native": "0.57.42",
+    "@types/react-test-renderer": "^16.9.0",
     "@types/supercluster": "5.0.1",
     "babel-loader": "8.0.5",
+    "lint-staged": "^9.4.0",
     "prettier": "1.16.4",
-    "react": "16.8.4",
+    "react": "^16.9.0",
     "react-native": "0.59.2",
     "react-native-maps": "0.23.0",
+    "react-test-renderer": "^16.9.0",
     "rollup": "1.8.0",
     "rollup-plugin-typescript2": "0.20.1",
     "sort-package-json": "1.22.1",
