@@ -1,4 +1,4 @@
-import { IClusterMapProps } from './cluster-map';
+import { IClusterMapProps } from "./typings";
 
 const PACKAGE_PROPS = [
   'isClusterExpandClick',
@@ -9,7 +9,8 @@ const PACKAGE_PROPS = [
   'onRegionChangeComplete',
   'region',
   'onClusterClick',
-  'priorityMarker'
+  'priorityMarker',
+  'onZoomChange'
 ];
 
 export const serializeProps = (userProps: IClusterMapProps) => {
@@ -33,3 +34,14 @@ export const makeId = () => {
   }
   return id;
 };
+
+export const calculateDelta = (x: number, y: number): number => x > y ? x - y : y - x;
+
+export const calculateAverage = (...args: number[]): number => {
+  const argList = [...args];
+  if (!argList.length) {
+    return 0
+  }
+
+  return argList.reduce((sum, num: number) => sum + num, 0) / argList.length;
+}

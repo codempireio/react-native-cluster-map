@@ -1,40 +1,19 @@
-import React, { ReactNode, ReactElement } from 'react';
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
-import GoogleMapView, {
-  PROVIDER_GOOGLE,
-  Region,
-  MapViewProps,
-} from 'react-native-maps';
-import SuperCluster from 'supercluster';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import GoogleMapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import isEqual from 'lodash.isequal';
 
 import { ClusterMarker } from './cluster-marker';
-
 import { clusterService } from './cluster-service';
 import * as utils from './utils';
 
+import {
+  IClusterMapProps,
+  IClusterMapState,
+  IClusterClickEvent,
+} from './typings';
+
 const CLUSTER_EXPAND_TIME = 100;
-
-export interface IClusterMapProps extends MapViewProps {
-  isClusterExpandClick: boolean;
-  superClusterOptions?: object;
-  priorityMarker?: ReactElement;
-  region: Region;
-  children: ReactElement[] | ReactElement;
-  style: StyleProp<ViewStyle>;
-  onZoomChange?: (zoom: number) => void;
-  renderClusterMarker: (pointCount: number) => ReactNode;
-  onMapReady: () => void;
-  onClusterClick: () => void;
-  onRegionChangeComplete: (region: Region) => void;
-}
-
-interface IClusterMapState {
-  markers:
-    | Array<SuperCluster.ClusterFeature<any>>
-    | Array<SuperCluster.PointFeature<any>>;
-  isMapLoaded: boolean;
-}
 
 export class ClusterMap extends React.PureComponent<
   IClusterMapProps,
@@ -103,13 +82,15 @@ export class ClusterMap extends React.PureComponent<
     this.generateMarkers(region);
   };
 
-  private onClusterMarkerPress = (clusterId: number) => {
+  private onClusterMarkerPress = (event: IClusterClickEvent) => {
     const { isClusterExpandClick, onClusterClick } = this.props;
+    const { clusterId } = event;
+
     if (isClusterExpandClick) {
       const region = clusterService.expandCluster(clusterId);
       this.mapRef.animateToRegion(region, CLUSTER_EXPAND_TIME);
     }
-    onClusterClick && onClusterClick();
+    onClusterClick && onClusterClick(event);
   };
 
   private renderMarkers = () => {
