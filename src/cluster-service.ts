@@ -4,6 +4,8 @@ import SuperCluster from 'supercluster';
 
 import { Feature, Point, BBox, GeoJsonProperties } from 'geojson';
 import { Region } from 'react-native-maps';
+import { ICoords } from './typings';
+import { calculateDelta, calculateAverage } from './utils';
 
 const DEFAULT_SUPERCLUSTER_OPTIONS = {
   radius: 16,
@@ -12,14 +14,9 @@ const DEFAULT_SUPERCLUSTER_OPTIONS = {
   nodeSize: 16,
 };
 
-const INCREASE_RATE = 2;
+export const INCREASE_RATE = 2;
 
-interface ICoords {
-  latitude: number;
-  longitude: number;
-}
-
-class ClusterService {
+export class ClusterService {
   private superCluster: SuperCluster = null;
   private markers: Array<Feature<Point>> = null;
 
@@ -33,7 +30,7 @@ class ClusterService {
 
     this.superCluster.load(this.markers);
   }
-
+  // TODO: Add unit test
   public getClustersOptions = (region: Region) => {
     const bBox = this.regionTobBox(region);
     const zoom = this.getBoundsZoomLevel(bBox);
@@ -43,7 +40,7 @@ class ClusterService {
       zoom
     };
   };
-
+  // TODO: Add unit test
   public expandCluster = (clusterId: number): Region => {
     const clusterMarkersCoordinates = this.getClusterMarkers(clusterId).map(
       this.getMarkersCoordinates
@@ -62,7 +59,8 @@ class ClusterService {
     },
     properties: { element },
   });
-
+  
+  // TODO: Add unit test
   private getBoundsZoomLevel = (bounds: BBox) => {
     const ZOOM_MAX = 20;
     const WORLD_DIM = this.getDimensions();
@@ -118,7 +116,7 @@ class ClusterService {
 
     return children;
   };
-
+  // TODO: Add unit test
   private getClusterMarkers = (
     clusterId: number
   ): Array<SuperCluster.PointFeature<GeoJsonProperties>> => {
@@ -130,14 +128,14 @@ class ClusterService {
   };
 
   private getMarkersRegion = (points: ICoords[]): Region => {
-    let coordinates = {
+    const coordinates = {
       minX: points[0].latitude,
       maxX: points[0].latitude,
       maxY: points[0].longitude,
       minY: points[0].longitude,
     };
 
-    coordinates = points.reduce(
+    const { maxX, minX, maxY, minY } = points.reduce(
       (acc, point) => ({
         minX: Math.min(acc.minX, point.latitude),
         maxX: Math.max(acc.maxX, point.latitude),
@@ -147,12 +145,12 @@ class ClusterService {
       { ...coordinates }
     );
 
-    const deltaX = coordinates.maxX - coordinates.minX;
-    const deltaY = coordinates.maxY - coordinates.minY;
+    const deltaX = calculateDelta(maxX, minX)
+    const deltaY = calculateDelta(maxY, minY)
 
     return {
-      latitude: (coordinates.minX + coordinates.maxX) / 2, // calculate center between min and max
-      longitude: (coordinates.minY + coordinates.maxY) / 2, // calculate center between min and max
+      latitude: calculateAverage(minX, maxX),
+      longitude: calculateAverage(minY, maxY),
       latitudeDelta: deltaX * INCREASE_RATE,
       longitudeDelta: deltaY * INCREASE_RATE,
     };

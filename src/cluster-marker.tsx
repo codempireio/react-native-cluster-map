@@ -1,14 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { Marker } from 'react-native-maps';
+import { Marker, MapEvent } from 'react-native-maps';
 
-export interface IClusterMarkerProps {
-  coordinates: number[];
-  pointCount: number;
-  children: React.ReactNode;
-  clusterId: number;
-  onClusterMarkerPress: (clusterId: number) => void;
-}
+import { IClusterMarkerProps, IMarkerEvent } from './typings';
 
 export const ClusterMarker = (props: IClusterMarkerProps) => {
   const {
@@ -23,7 +17,10 @@ export const ClusterMarker = (props: IClusterMarkerProps) => {
     return null;
   }
 
-  const onClusterPress = () => onClusterMarkerPress(clusterId);
+  const onClusterPress = (e: MapEvent<IMarkerEvent>) => {
+    const { coordinate } = e.nativeEvent;
+    onClusterMarkerPress({ clusterId, coordinate });
+  };
   const [longitude, latitude] = coordinates;
 
   return (
