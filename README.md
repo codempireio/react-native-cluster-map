@@ -15,9 +15,9 @@ Made by [CODEMPIRE](http://codempire.io/)
 
 | Zoom in                                                      | Zoom out                                                                   |
 | ------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| ![Example zoom out](example/images/zoom-out.gif)             | ![Example zoom in](example/images/zoom-in.gif)                             |
+| ![Example zoom out](demo/images/zoom-in.gif)             | ![Example zoom in](demo/images/zoom-out.gif)                             |
 | **Cluster Expand**                                           | **Nested Cluster Expand**                                                  |
-| ![Example cluster expand](example/images/cluster-expand.gif) | ![Example nested cluster expand](example/images/nested-cluster-expand.gif) |
+| ![Example cluster expand](demo/images/cluster-expand.gif) | ![Example nested cluster expand](demo/images/nested-cluster-expand.gif) |
 
 ## Installation
 
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 
 ### Result
 
-![Custom Marker Example](example/images/custom-marker.png)
+![Custom Marker Example](demo/images/custom-marker.png)
 
 ## Props
 
@@ -127,7 +127,7 @@ ___
 
 | Event Name         | Returns | Notes                                                                     |
 | ------------------ | ------- | ------------------------------------------------------------------------- |
-| **onClusterClick** | void    | Callback that is called when the user pressed on the **_cluster_** marker |
+| **onClusterClick** | { clusterId: number, coordinate : LatLng } | Callback that is called when the user pressed on the **_cluster_** marker |
 | **onZoomChange**   | void    | Callback that is called with updated map zoom in **number**               |
 
 ___
