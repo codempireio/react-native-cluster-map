@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
 | **region**               | _Region_     | **_required_**                                        | Google Map Region                        |
 | **priorityMarker**       | _ReactNode_  | null                                                  | Marker which will be outside of clusters |
 | **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component         |
+| **clusterMarkerProps**   | _object_     | undefined                                             | Additional ClusterMarker props           |
 | **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView                      |
 
 ___
