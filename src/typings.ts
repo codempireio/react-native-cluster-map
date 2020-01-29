@@ -15,6 +15,7 @@ export interface IClusterMapProps extends MapViewProps {
   onMapReady: () => void;
   onClusterClick: (clusterClickEvent?: IClusterClickEvent) => void;
   onRegionChangeComplete: (region: Region) => void;
+  clusterMarkerProps?: object;
 }
 
 export interface ICoords {
@@ -40,6 +41,7 @@ export interface IClusterMarkerProps {
   children: ReactNode;
   clusterId: number;
   onClusterMarkerPress: (clusterClickEvent: IClusterClickEvent) => void;
+  clusterMarkerProps?: object;
 }
 
 export interface IMarkerEvent {
