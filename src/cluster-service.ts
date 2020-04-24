@@ -30,11 +30,17 @@ export class ClusterService {
 
     this.superCluster.load(this.markers);
   }
-  // TODO: Add unit test
-  public getClustersOptions = (region: Region) => {
-    const bBox = this.regionTobBox(region);
-    const zoom = this.getBoundsZoomLevel(bBox);
 
+  public getCurrentZoom = (region: Region) => {
+    const bBox = this.regionTobBox(region);
+    return this.getBoundsZoomLevel(bBox);
+  }
+
+  // TODO: Add unit test
+  public getClustersOptions = (region: Region, currentZoom: null | number) => {
+    const bBox = this.regionTobBox(region);
+    const old = this.getBoundsZoomLevel(bBox);
+    const zoom = currentZoom || this.getBoundsZoomLevel(bBox);
     return {
       markers: this.superCluster.getClusters(bBox, zoom),
       zoom,
@@ -80,7 +86,6 @@ export class ClusterService {
     const lngFraction = (lngDiff < 0 ? lngDiff + 360 : lngDiff) / 360;
     const latZoom = zoom(WORLD_DIM.height, WORLD_DIM.height, latFraction);
     const lngZoom = zoom(WORLD_DIM.width, WORLD_DIM.width, lngFraction);
-
     return Math.min(latZoom, lngZoom, ZOOM_MAX);
   };
 

@@ -25,7 +25,11 @@ export const ClusterMarker = (props: IClusterMarkerProps) => {
   const [longitude, latitude] = coordinates;
 
   return (
-    <Marker coordinate={{ longitude, latitude }} onPress={onClusterPress} {...clusterMarkerProps}>
+    <Marker
+      coordinate={{ longitude, latitude }}
+      onPress={onClusterPress}
+      {...clusterMarkerProps}
+    >
       {children || (
         <View style={styles.clusterBox}>
           <Text style={styles.clusterText}>{pointCount}</Text>

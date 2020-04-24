@@ -25,9 +25,10 @@ export interface ICoords {
 
 export interface IClusterMapState {
   markers:
-    | Array<SuperCluster.ClusterFeature<any>>
-    | Array<SuperCluster.PointFeature<any>>;
+  | Array<SuperCluster.ClusterFeature<any>>
+  | Array<SuperCluster.PointFeature<any>>;
   isMapLoaded: boolean;
+  currentZoom: null | number;
 }
 
 export interface IClusterClickEvent {
