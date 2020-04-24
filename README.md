@@ -7,16 +7,16 @@
 
 React Native MapView clustering component for iOS + Android
 
-___
+---
 
 Made by [CODEMPIRE](http://codempire.io/)
 
 ## Examples
 
-| Zoom in                                                      | Zoom out                                                                   |
-| ------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| ![Example zoom out](demo/images/zoom-in.gif)             | ![Example zoom in](demo/images/zoom-out.gif)                             |
-| **Cluster Expand**                                           | **Nested Cluster Expand**                                                  |
+| Zoom in                                                   | Zoom out                                                                |
+| --------------------------------------------------------- | ----------------------------------------------------------------------- |
+| ![Example zoom out](demo/images/zoom-in.gif)              | ![Example zoom in](demo/images/zoom-out.gif)                            |
+| **Cluster Expand**                                        | **Nested Cluster Expand**                                               |
 | ![Example cluster expand](demo/images/cluster-expand.gif) | ![Example nested cluster expand](demo/images/nested-cluster-expand.gif) |
 
 ## Installation
@@ -32,8 +32,8 @@ npm install --save react-native-cluster-map
 ## Usage
 
 ```javascript
-import { Marker } from "react-native-maps";
-import { ClusterMap } from "react-native-cluster-map";
+import { Marker } from 'react-native-maps';
+import { ClusterMap } from 'react-native-cluster-map';
 
 <ClusterMap
   region={{
@@ -43,17 +43,17 @@ import { ClusterMap } from "react-native-cluster-map";
     longitudeDelta: 0.0421,
   }}
 >
-  <Marker coordinate={{ latitude:37.78725, longitude: -122.434 }} />
-  <Marker coordinate={{ latitude:37.789, longitude: -122.431 }} />
-  <Marker coordinate={{ latitude:37.78825, longitude:-122.4324 }} />
-</ClusterMap>
+  <Marker coordinate={{ latitude: 37.78725, longitude: -122.434 }} />
+  <Marker coordinate={{ latitude: 37.789, longitude: -122.431 }} />
+  <Marker coordinate={{ latitude: 37.78825, longitude: -122.4324 }} />
+</ClusterMap>;
 ```
 
 ### Custom Cluster Marker
 
 You can customize cluster marker with **renderClusterMarker** prop
 
-> *MyMap.jsx*
+> _MyMap.jsx_
 
 ```javascript
 import { Marker } from "react-native-maps";
@@ -79,7 +79,7 @@ render () {
 
 ```
 
-> *MyCluster.jsx*
+> _MyCluster.jsx_
 
 ```javascript
 import * as React from 'react';
@@ -91,8 +91,8 @@ export const MyCluster = (props) => {
     <View style={styles}>
       <Text>{count}</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   width: 50,
@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
   borderRadius: 25,
   backgroundColor: 'red',
   justifyContent: 'center',
-  alignItems: 'center'
-})
+  alignItems: 'center',
+});
 ```
 
 ### Result
@@ -120,17 +120,17 @@ const styles = StyleSheet.create({
 | **clusterMarkerProps**   | _object_     | undefined                                             | Additional ClusterMarker props           |
 | **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView                      |
 
-___
+---
 
 > Also contains react-native-maps [\<MapView /> Props](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md#props)
 
 ## Events
 
-| Event Name         | Returns | Notes                                                                     |
-| ------------------ | ------- | ------------------------------------------------------------------------- |
-| **onClusterClick** | { clusterId: number, coordinate : LatLng } | Callback that is called when the user pressed on the **_cluster_** marker |
-| **onZoomChange**   | void    | Callback that is called with updated map zoom in **number**               |
+| Event Name         | Returns                                                          | Notes                                                                     |
+| ------------------ | ---------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **onClusterClick** | ({ clusterId: number, coordinate : LatLng }, children: Marker[]) | Callback that is called when the user pressed on the **_cluster_** marker |
+| **onZoomChange**   | void                                                             | Callback that is called with updated map zoom in **number**               |
 
-___
+---
 
 > Also contains react-native-maps [\<MapView /> Events](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md#events)

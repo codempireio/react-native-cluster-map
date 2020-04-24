@@ -100,12 +100,14 @@ export class ClusterMap extends React.PureComponent<
   private onClusterMarkerPress = (event: IClusterClickEvent) => {
     const { isClusterExpandClick, onClusterClick } = this.props;
     const { clusterId } = event;
-
     if (isClusterExpandClick) {
       const region = clusterService.expandCluster(clusterId);
       this.mapRef.animateToRegion(region, CLUSTER_EXPAND_TIME);
     }
-    onClusterClick && onClusterClick(event);
+    if (onClusterClick) {
+      const clusterChildren = clusterService.getClusterChildren(clusterId);
+      onClusterClick(event, clusterChildren);
+    }
   };
 
   private renderMarkers = () => {
@@ -115,7 +117,6 @@ export class ClusterMap extends React.PureComponent<
     return markers.map((marker) => {
       const { properties, geometry } = marker;
       const { cluster, element, point_count } = properties;
-
       const key = utils.makeId();
 
       if (!cluster && element) {

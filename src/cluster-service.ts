@@ -36,10 +36,13 @@ export class ClusterService {
     return this.getBoundsZoomLevel(bBox);
   }
 
+  public getClusterChildren = (id: number) => {
+    return this.superCluster.getLeaves(id)
+  }
+
   // TODO: Add unit test
   public getClustersOptions = (region: Region, currentZoom: null | number) => {
     const bBox = this.regionTobBox(region);
-    const old = this.getBoundsZoomLevel(bBox);
     const zoom = currentZoom || this.getBoundsZoomLevel(bBox);
     return {
       markers: this.superCluster.getClusters(bBox, zoom),
