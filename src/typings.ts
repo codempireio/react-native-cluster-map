@@ -1,6 +1,6 @@
 import { ReactNode, ReactElement } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { LatLng, MapViewProps, Region } from 'react-native-maps';
+import { LatLng, MapViewProps, Region, Marker } from 'react-native-maps';
 import SuperCluster from 'supercluster';
 
 export interface IClusterMapProps extends MapViewProps {
@@ -13,7 +13,9 @@ export interface IClusterMapProps extends MapViewProps {
   onZoomChange?: (zoom: number) => void;
   renderClusterMarker: (pointCount: number) => ReactNode;
   onMapReady: () => void;
-  onClusterClick: (clusterClickEvent?: IClusterClickEvent) => void;
+  onClusterClick: (clusterClickEvent?: IClusterClickEvent,
+    clusterChildren?: Array<SuperCluster.ClusterFeature<any>>
+      | Array<SuperCluster.PointFeature<any>>) => void;
   onRegionChangeComplete: (region: Region) => void;
   clusterMarkerProps?: object;
 }

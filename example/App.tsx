@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import { ClusterMap } from './src';
+import { ClusterMap } from '../src';
 
 const markers = [
   { latitude: 37.78825, longitude: -122.4324 },
