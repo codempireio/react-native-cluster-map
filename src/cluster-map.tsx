@@ -26,6 +26,7 @@ export class ClusterMap extends React.PureComponent<
   public state: IClusterMapState = {
     markers: [],
     isMapLoaded: false,
+    currentZoom: null,
   };
 
   public render() {
@@ -51,33 +52,47 @@ export class ClusterMap extends React.PureComponent<
     this.clusterize();
   }
 
-  public componentDidUpdate(prevProps: IClusterMapProps) {
-    if (isEqual(this.props.children, prevProps.children)) {
+  public componentDidUpdate(
+    prevProps: IClusterMapProps,
+    prevState: IClusterMapState
+  ) {
+    if (
+      isEqual(this.props.children, prevProps.children) &&
+      isEqual(this.state.currentZoom, prevState.currentZoom)
+    ) {
       return;
     }
     this.clusterize();
   }
 
   private generateMarkers(region: Region) {
-    const { onZoomChange } = this.props;
-    const { markers, zoom } = clusterService.getClustersOptions(region);
-    if (onZoomChange) {
-      onZoomChange(zoom);
+    const { markers, zoom } = clusterService.getClustersOptions(
+      region,
+      this.state.currentZoom
+    );
+    if (this.props.onZoomChange) {
+      this.props.onZoomChange(zoom);
     }
+
     this.setState({
       markers,
     });
   }
 
   private onRegionChangeComplete = (region: Region) => {
-    this.generateMarkers(region);
-    this.props.onRegionChangeComplete &&
+    const zoom = clusterService.getCurrentZoom(region);
+    if (this.state.currentZoom !== zoom) {
+      this.setState({
+        currentZoom: zoom,
+      });
+    }
+    if (this.props.onRegionChangeComplete) {
       this.props.onRegionChangeComplete(region);
+    }
   };
 
   private clusterize = () => {
     const { superClusterOptions, region, children } = this.props;
-
     clusterService.createClusters(superClusterOptions, children);
     this.generateMarkers(region);
   };
