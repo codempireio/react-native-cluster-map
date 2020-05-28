@@ -1,6 +1,6 @@
 {
   "name": "react-native-cluster-map",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "React Native MapView clustering component for iOS + Android",
   "keywords": [
     "android",

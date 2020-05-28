@@ -1,6 +1,6 @@
 import { ReactNode, ReactElement } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { LatLng, MapViewProps, Region, Marker } from 'react-native-maps';
+import { LatLng, MapViewProps, Region, PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 import SuperCluster from 'supercluster';
 
 export interface IClusterMapProps extends MapViewProps {
@@ -18,6 +18,7 @@ export interface IClusterMapProps extends MapViewProps {
       | Array<SuperCluster.PointFeature<any>>) => void;
   onRegionChangeComplete: (region: Region) => void;
   clusterMarkerProps?: object;
+  provider: typeof PROVIDER_DEFAULT | typeof PROVIDER_GOOGLE;
 }
 
 export interface ICoords {
