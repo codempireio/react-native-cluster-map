@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
 | **priorityMarker**       | _ReactNode_  | null                                                  | Marker which will be outside of clusters |
 | **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component         |
 | **clusterMarkerProps**   | _object_     | undefined                                             | Additional ClusterMarker props           |
+| **provider**                | _'google'_ or _null_  | 'google'                                    | Map provider. If null will use the platform default one (Google Maps for Android and MapKit for iOS)                     |
 | **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView                      |
 
 ---
