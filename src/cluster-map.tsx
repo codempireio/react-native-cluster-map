@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, { Region, PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 import isEqual from 'lodash.isequal';
@@ -42,7 +42,7 @@ export class ClusterMap extends React.PureComponent<
         onRegionChangeComplete={this.onRegionChangeComplete}
         provider={provider === PROVIDER_DEFAULT ? null : PROVIDER_GOOGLE}
       >
-        {this.state.isMapLoaded && this.renderMarkers()}
+        {this.state.isMapLoaded && this.renderChildren()}
         {priorityMarker ? priorityMarker : null}
       </MapView>
     );
@@ -93,7 +93,10 @@ export class ClusterMap extends React.PureComponent<
 
   private clusterize = () => {
     const { superClusterOptions, region, children } = this.props;
-    clusterService.createClusters(superClusterOptions, children);
+    clusterService.createClusters(
+      superClusterOptions,
+      children.filter((child: ReactElement) => !child.props.neverCluster)
+    );
     this.generateMarkers(region);
   };
 
@@ -136,6 +139,15 @@ export class ClusterMap extends React.PureComponent<
         </ClusterMarker>
       );
     });
+  };
+
+  private renderUnclusteredChildren = () => {
+    const { children } = this.props;
+    return children.filter((child: ReactElement) => child.props.neverCluster);
+  };
+
+  private renderChildren = () => {
+    return [...this.renderMarkers(), ...this.renderUnclusteredChildren()];
   };
 
   private onMapReady = () => {
