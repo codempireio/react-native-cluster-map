@@ -122,7 +122,7 @@ export class ClusterService {
       return [children];
     }
 
-    return children;
+    return children.filter((child: ReactElement) => !child.props.neverCluster);
   };
   // TODO: Add unit test
   private getClusterMarkers = (

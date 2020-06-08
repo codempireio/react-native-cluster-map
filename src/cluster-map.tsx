@@ -95,7 +95,7 @@ export class ClusterMap extends React.PureComponent<
     const { superClusterOptions, region, children } = this.props;
     clusterService.createClusters(
       superClusterOptions,
-      children.filter((child: ReactElement) => !child.props.neverCluster)
+      children
     );
     this.generateMarkers(region);
   };
@@ -143,7 +143,16 @@ export class ClusterMap extends React.PureComponent<
 
   private renderUnclusteredChildren = () => {
     const { children } = this.props;
-    return children.filter((child: ReactElement) => child.props.neverCluster);
+
+    if (Array.isArray(children)) {
+      return children.filter((child: ReactElement) => child.props.neverCluster);
+    }
+
+    if (children.props && children.props.neverCluster) {
+      return [children];
+    }
+
+    return [];
   };
 
   private renderChildren = () => {
