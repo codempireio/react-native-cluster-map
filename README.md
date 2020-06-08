@@ -125,6 +125,13 @@ const styles = StyleSheet.create({
 
 > Also contains react-native-maps [\<MapView /> Props](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md#props)
 
+
+## Children Props
+
+| Props                    | Type         | Default                                               | Note                                     |
+| ------------------------ | ------------ | ----------------------------------------------------- | ---------------------------------------- |
+| **neverCluster**  | _boolean_    | false | Tag a child of the Map to not be clustered. This prop is **_required_** for non-marker children of the map, such as geo-fences and overlays, or any child that does not have a `coordinates` prop. |
+
 ## Events
 
 | Event Name         | Returns                                                          | Notes                                                                     |
