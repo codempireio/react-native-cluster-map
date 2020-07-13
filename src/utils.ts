@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { IClusterMapProps } from './typings';
 
 const PACKAGE_PROPS = [
@@ -12,6 +13,23 @@ const PACKAGE_PROPS = [
   'priorityMarker',
   'onZoomChange',
 ];
+
+export const formatChildren = (
+  children: ReactElement[] | ReactElement,
+  isInCluster: boolean
+) => {
+  if (!children) {
+    return [];
+  }
+
+  const childrenList = !Array.isArray(children) ? [children] : children;
+
+  return childrenList.filter((child: ReactElement) =>
+    isInCluster
+      ? child.props.isOutsideCluster !== true
+      : child.props.isOutsideCluster
+  );
+};
 
 export const serializeProps = (userProps: IClusterMapProps) => {
   return Object.keys(userProps).reduce(

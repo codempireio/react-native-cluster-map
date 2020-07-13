@@ -123,6 +123,14 @@ const styles = StyleSheet.create({
 
 ---
 
+## Children Props
+
+| Props                    | Type         | Default                                               | Note                                     |
+| ------------------------ | ------------ | ----------------------------------------------------- | ---------------------------------------- |
+| **isOutsideCluster**  | _boolean_    | false | Prevent child from clusterization. **_Required_** for not a Marker children (e.g.  Polygon, Polyline, Circle) |
+
+---
+
 > Also contains react-native-maps [\<MapView /> Props](https://github.com/react-native-community/react-native-maps/blob/master/docs/mapview.md#props)
 
 ## Events
