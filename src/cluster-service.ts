@@ -5,7 +5,7 @@ import SuperCluster from 'supercluster';
 import { Feature, Point, BBox, GeoJsonProperties } from 'geojson';
 import { Region } from 'react-native-maps';
 import { ICoords } from './typings';
-import { calculateDelta, calculateAverage } from './utils';
+import { calculateDelta, calculateAverage, formatChildren } from './utils';
 
 const DEFAULT_SUPERCLUSTER_OPTIONS = {
   radius: 16,
@@ -26,7 +26,9 @@ export class ClusterService {
   ) {
     const options = propsOptions || DEFAULT_SUPERCLUSTER_OPTIONS;
     this.superCluster = new SuperCluster(options);
-    this.markers = this.createMarkers(children).map(this.createGeoJsonFeature);
+    this.markers = formatChildren(children, true).map(
+      this.createGeoJsonFeature
+    );
 
     this.superCluster.load(this.markers);
   }
@@ -34,11 +36,11 @@ export class ClusterService {
   public getCurrentZoom = (region: Region) => {
     const bBox = this.regionTobBox(region);
     return this.getBoundsZoomLevel(bBox);
-  }
+  };
 
   public getClusterChildren = (id: number) => {
-    return this.superCluster.getLeaves(id)
-  }
+    return this.superCluster.getLeaves(id);
+  };
 
   // TODO: Add unit test
   public getClustersOptions = (region: Region, currentZoom: null | number) => {
@@ -113,17 +115,6 @@ export class ClusterService {
     };
   };
 
-  private createMarkers = (children: ReactElement[] | ReactElement) => {
-    if (!children) {
-      return [];
-    }
-
-    if (!Array.isArray(children)) {
-      return [children];
-    }
-
-    return children;
-  };
   // TODO: Add unit test
   private getClusterMarkers = (
     clusterId: number

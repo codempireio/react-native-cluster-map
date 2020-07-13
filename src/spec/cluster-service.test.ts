@@ -1,7 +1,7 @@
 import SuperCluster from 'supercluster';
 
 import { ClusterService, INCREASE_RATE } from '../cluster-service';
-import { MockFeature, repeatElement, generateMockCoords } from './mock.utils';
+import { MockFeature, generateMockCoords } from './mock.utils';
 
 import {
   MOCKED_DEVICE_WIDTH,
@@ -84,21 +84,6 @@ describe('Service utils', () => {
     expect(resLatitude).toBe(expectedLatitude);
   });
 
-  test('createMarkers should return array', () => {
-    const result = service.createMarkers(mockedReactEl);
-
-    const isArray = Array.isArray(result);
-    expect(isArray).toBeTruthy();
-    expect(result).toHaveLength(1);
-
-    const EXPECTED_LENGTH = 5;
-    const mockedElemList = repeatElement(mockedReactEl, EXPECTED_LENGTH);
-
-    const result1 = service.createMarkers(mockedElemList);
-    const isArray1 = Array.isArray(result1);
-    expect(isArray1).toBeTruthy();
-    expect(result1).toHaveLength(EXPECTED_LENGTH);
-  });
 
   test('getMarkersRegion', () => {
     const coordsListLength = 8;

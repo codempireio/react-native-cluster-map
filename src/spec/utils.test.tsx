@@ -1,9 +1,16 @@
+import React from 'react';
+import { Marker, Polyline } from 'react-native-maps';
+
 import {
   makeId,
   serializeProps,
   calculateAverage,
   calculateDelta,
+  formatChildren,
 } from '../utils';
+
+import { mockedReactEl } from './mock.constants';
+import { repeatElement } from './mock.utils';
 
 describe('Make ID utils function', () => {
   test(`Generated id's length have to be 10`, () => {
@@ -14,6 +21,48 @@ describe('Make ID utils function', () => {
   test(`Generated id's type have to be string`, () => {
     const generatedId = makeId();
     expect(typeof generatedId).toBe('string');
+  });
+});
+
+describe('formatChildren utils function', () => {
+  const children = [
+    <Marker key={1} coordinate={{ longitude: 100, latitude: 120 }} />,
+    <Polyline key={2} isOutsideCluster={true} />,
+    <Marker
+      key={3}
+      coordinate={{ longitude: 100, latitude: 120 }}
+      isOutsideCluster={true}
+    />,
+  ];
+  test(`formatChildren should return markers`, () => {
+    const res = formatChildren(children, true);
+
+    expect(res).toHaveLength(1);
+    expect(res[0]).toBe(children[0]);
+  });
+
+  test(`formatChildren should return Polyline`, () => {
+    const res = formatChildren(children, false);
+
+    expect(res).toHaveLength(2);
+    expect(res[0]).toBe(children[1]);
+    expect(res[1]).toBe(children[2]);
+  });
+
+  test('formatChildren should return array', () => {
+    const result = formatChildren(mockedReactEl, true);
+
+    const isArray = Array.isArray(result);
+    expect(isArray).toBeTruthy();
+    expect(result).toHaveLength(1);
+
+    const EXPECTED_LENGTH = 5;
+    const mockedElemList = repeatElement(mockedReactEl, EXPECTED_LENGTH);
+
+    const result1 = formatChildren(mockedElemList, true);
+    const isArray1 = Array.isArray(result1);
+    expect(isArray1).toBeTruthy();
+    expect(result1).toHaveLength(EXPECTED_LENGTH);
   });
 });
 
