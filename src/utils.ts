@@ -24,11 +24,13 @@ export const formatChildren = (
 
   const childrenList = !Array.isArray(children) ? [children] : children;
 
-  return childrenList.filter((child: ReactElement) =>
-    isInCluster
-      ? child.props.isOutsideCluster !== true
-      : child.props.isOutsideCluster
-  );
+  return childrenList
+    .flat(1)
+    .filter((child: ReactElement) =>
+      isInCluster && child.props
+        ? child.props.isOutsideCluster !== true
+        : child.props.isOutsideCluster
+    );
 };
 
 export const serializeProps = (userProps: IClusterMapProps) => {
