@@ -142,7 +142,9 @@ export class ClusterMap extends React.PureComponent<
           clusterMarkerProps={clusterMarkerProps}
           key={key}
         >
-          {renderClusterMarker && renderClusterMarker(point_count)}
+          {renderClusterMarker && renderClusterMarker({
+            pointCount: point_count, clusterId: marker.properties.cluster_id
+          })}
         </ClusterMarker>
       );
     });
