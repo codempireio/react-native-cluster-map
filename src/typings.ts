@@ -11,7 +11,7 @@ export interface IClusterMapProps extends MapViewProps {
   children: ReactElement[] | ReactElement;
   style: StyleProp<ViewStyle>;
   onZoomChange?: (zoom: number) => void;
-  renderClusterMarker: (pointCount: number) => ReactNode;
+  renderClusterMarker: (renderClusterMarkerOptions: { pointCount: number, clusterId: number }) => ReactNode;
   onMapReady: () => void;
   onClusterClick: (clusterClickEvent?: IClusterClickEvent,
     clusterChildren?: Array<SuperCluster.ClusterFeature<any>>

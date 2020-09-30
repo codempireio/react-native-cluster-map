@@ -110,15 +110,15 @@ const styles = StyleSheet.create({
 
 ## Props
 
-| Props                    | Type         | Default                                               | Note                                     |
+| Props                    | Type         | Default value                                         | Note                                     |
 | ------------------------ | ------------ | ----------------------------------------------------- | ---------------------------------------- |
 | **superClusterOptions**  | _Options_    | { radius: 16, maxZoom: 15, minZoom: 1, nodeSize: 16 } | SuperCluster lib options                 |
 | **isClusterExpandClick** | _boolean_    | true                                                  | Enables cluster zoom on click            |
 | **region**               | _Region_     | **_required_**                                        | Google Map Region                        |
 | **priorityMarker**       | _ReactNode_  | null                                                  | Marker which will be outside of clusters |
-| **renderClusterMarker**  | ():ReactNode | () => { return \<CustomClusterMarker /> }             | Returns cluster marker component         |
+| **renderClusterMarker**  | (_object_):ReactNode |      undefined                                | Returns cluster marker component         |
 | **clusterMarkerProps**   | _object_     | undefined                                             | Additional ClusterMarker props           |
-| **provider**                | _'google'_ or _null_  | 'google'                                    | Map provider. If null will use the platform default one (Google Maps for Android and MapKit for iOS)                     |
+| **provider**             | _'google'_ or _null_  | 'google'                                     | Map provider. If null will use the platform default one (Google Maps for Android and MapKit for iOS)                     |
 | **style**                | _StyleProp_  | absoluteFillObject                                    | Styling for MapView                      |
 
 ---
