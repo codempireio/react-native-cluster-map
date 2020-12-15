@@ -8,7 +8,7 @@ export interface IClusterMapProps extends MapViewProps {
   superClusterOptions?: object;
   priorityMarker?: React.ReactElement;
   region: Region;
-  children: ReactElement[] | ReactElement;
+  children: ReactElement[] | ReactElement | Element[] | Element;
   style: StyleProp<ViewStyle>;
   onZoomChange?: (zoom: number) => void;
   renderClusterMarker: (renderClusterMarkerOptions: { pointCount: number, clusterId: number }) => ReactNode;
