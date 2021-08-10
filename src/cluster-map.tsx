@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import MapView, {
   Region,
+  LatLng,
   PROVIDER_GOOGLE,
   PROVIDER_DEFAULT,
 } from 'react-native-maps';
@@ -67,6 +68,14 @@ export class ClusterMap extends React.PureComponent<
       return;
     }
     this.clusterize();
+  }
+
+  public animateToRegion(region: Region, duration: number) {
+    this.mapRef.animateToRegion(region, duration);
+  }
+
+  public fitToCoordinates(coordinates: Array<LatLng>, options: object) {
+    this.mapRef.fitToCoordinates(coordinates, {options});
   }
 
   private generateMarkers(region: Region) {
